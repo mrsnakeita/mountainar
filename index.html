@@ -54,7 +54,11 @@ video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-inde
 .lbl-dist{font-size:9px;color:rgba(255,255,255,.5);margin-top:1px}
 .lbl-dot{width:6px;height:6px;background:#38bdf8;border-radius:50%;margin:3px auto 0;box-shadow:0 0 6px #38bdf8}
 
-/* ── Popup tap ── */
+/* Lucchetto Pro nel popup */
+.pop-pro{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);
+  border-radius:10px;padding:8px 10px;margin-top:6px;cursor:pointer;text-align:center}
+.pop-pro-label{font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.8px}
+.pop-pro-val{font-size:12px;color:#f59e0b;font-weight:700;margin-top:2px}
 #popup{position:fixed;z-index:200;display:none;
   background:rgba(0,15,35,.97);border:1px solid rgba(56,189,248,.7);
   border-radius:16px;padding:16px;min-width:210px;max-width:260px;
@@ -79,7 +83,17 @@ video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-inde
 .pop-weather-sub{font-size:9px;color:rgba(255,255,255,.4)}
 #popLoading{font-size:11px;color:rgba(255,255,255,.4);text-align:center;padding:6px 0}
 
-/* ── Selettore raggio ── */
+/* ── Banner Pro ── */
+#proBtn{position:fixed;top:60px;right:14px;z-index:10;
+  background:linear-gradient(135deg,#f59e0b,#d97706);
+  border:none;border-radius:20px;padding:7px 13px;
+  font-size:11px;font-weight:800;color:#000;cursor:pointer;
+  pointer-events:auto;box-shadow:0 2px 12px rgba(245,158,11,.4);
+  display:none}
+#proToast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+  z-index:500;background:rgba(0,15,35,.97);border:1px solid #38bdf8;
+  border-radius:14px;padding:16px 24px;font-size:14px;font-weight:700;
+  color:#fff;text-align:center;display:none;pointer-events:none}
 #radiusBtn{position:fixed;bottom:75px;left:14px;z-index:10;
   background:rgba(0,15,35,.85);border:1px solid rgba(56,189,248,.4);
   border-radius:20px;padding:7px 13px;font-size:11px;font-weight:700;
@@ -151,6 +165,10 @@ video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-inde
   <div id="hudBot"><div id="statusTxt">—</div></div>
 </div>
 
+<!-- Banner Pro -->
+<button id="proBtn" onclick="PRO.purchase()">⭐ Pro 2,99€</button>
+<div id="proToast"></div>
+
 <!-- Popup cima -->
 <div id="popup">
   <button class="pop-close" onclick="closePopup()">✕</button>
@@ -164,39 +182,50 @@ video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-inde
       <div class="pop-cell-label">Distanza</div>
       <div class="pop-cell-val" id="popDist">—</div>
     </div>
-    <div class="pop-cell">
-      <div class="pop-cell-label">Paese</div>
-      <div class="pop-cell-val" id="popCountry">—</div>
-    </div>
-    <div class="pop-cell">
-      <div class="pop-cell-label">Azimut</div>
-      <div class="pop-cell-val" id="popAz">—</div>
-    </div>
   </div>
-  <div class="pop-weather">
-    <div class="pop-weather-title">☁️ Meteo sulla cima</div>
-    <div id="popLoading">Caricamento meteo...</div>
-    <div id="popWeatherData" style="display:none">
-      <div class="pop-weather-row">
-        <div class="pop-weather-item">
-          <div class="pop-weather-icon" id="wIcon">—</div>
-          <div class="pop-weather-val" id="wTemp">—</div>
-          <div class="pop-weather-sub">Temp.</div>
-        </div>
-        <div class="pop-weather-item">
-          <div class="pop-weather-val" id="wWind">—</div>
-          <div class="pop-weather-sub">Vento km/h</div>
-        </div>
-        <div class="pop-weather-item">
-          <div class="pop-weather-val" id="wHumid">—</div>
-          <div class="pop-weather-sub">Umidità</div>
-        </div>
-        <div class="pop-weather-item">
-          <div class="pop-weather-val" id="wVis">—</div>
-          <div class="pop-weather-sub">Visib. km</div>
+  <!-- Paese + Azimut: Free mostra lucchetto, Pro mostra dati -->
+  <div id="popProData">
+    <div class="pop-grid" style="margin-top:6px">
+      <div class="pop-cell">
+        <div class="pop-cell-label">Paese</div>
+        <div class="pop-cell-val" id="popCountry">—</div>
+      </div>
+      <div class="pop-cell">
+        <div class="pop-cell-label">Azimut</div>
+        <div class="pop-cell-val" id="popAz">—</div>
+      </div>
+    </div>
+    <div class="pop-weather">
+      <div class="pop-weather-title">☁️ Meteo sulla cima</div>
+      <div id="popLoading">Caricamento meteo...</div>
+      <div id="popWeatherData" style="display:none">
+        <div class="pop-weather-row">
+          <div class="pop-weather-item">
+            <div class="pop-weather-icon" id="wIcon">—</div>
+            <div class="pop-weather-val" id="wTemp">—</div>
+            <div class="pop-weather-sub">Temp.</div>
+          </div>
+          <div class="pop-weather-item">
+            <div class="pop-weather-val" id="wWind">—</div>
+            <div class="pop-weather-sub">Vento km/h</div>
+          </div>
+          <div class="pop-weather-item">
+            <div class="pop-weather-val" id="wHumid">—</div>
+            <div class="pop-weather-sub">Umidità</div>
+          </div>
+          <div class="pop-weather-item">
+            <div class="pop-weather-val" id="wVis">—</div>
+            <div class="pop-weather-sub">Visib. km</div>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+  <!-- Lucchetto Free -->
+  <div id="popProLock" class="pop-pro" onclick="PRO.purchase(); closePopup();" style="display:none">
+    <div class="pop-pro-label">🔒 Funzione Pro</div>
+    <div class="pop-pro-val">Paese · Azimut · Meteo</div>
+    <div style="font-size:10px;color:rgba(255,255,255,.5);margin-top:3px">Tocca per sbloccare · 2,99€</div>
   </div>
 </div>
 
@@ -223,7 +252,30 @@ var FOV    = 65;
 var RADIUS = 100;
 var S      = { lat:null, lon:null, heading:0, mountains:[], turnTimer:null };
 
-// ── DB LOCALE ─────────────────────────────────────────────────────────────
+// ── PRO MANAGER ───────────────────────────────────────────────────────────
+var PRO = {
+  // In produzione questo verrà da StoreKit (iOS) o Play Billing (Android)
+  // Per ora usa localStorage per simulare l'acquisto
+  isPro: localStorage.getItem('mtn_pro') === '1',
+  PRICE: '2,99€',
+  MAX_LABELS_FREE: 5,
+  MAX_RADIUS_FREE: 20,
+
+  unlock: function(){
+    localStorage.setItem('mtn_pro','1');
+    PRO.isPro = true;
+    document.getElementById('proBtn').style.display='none';
+    showProToast('🎉 Versione Pro attivata!');
+    // Ricarica cime senza limiti
+    S.mountains=[]; loadPeaks();
+  },
+  // Simula acquisto (nell'app nativa sarà StoreKit)
+  purchase: function(){
+    if(confirm('Acquistare Mountain AR Pro per '+PRO.PRICE+'?\n\n✓ Raggio fino a 150km\n✓ Cime illimitate\n✓ Meteo sulla cima\n✓ Paese e azimut')){
+      PRO.unlock();
+    }
+  }
+};
 var DB = [
   {n:"Monte Bianco",a:4808,lat:45.8326,lon:6.8652,c:"Italia/Francia",ch:"Alpi Occ."},
   {n:"Monte Rosa",a:4634,lat:45.9372,lon:7.8672,c:"Italia/Svizzera",ch:"Alpi Pennine"},
@@ -287,7 +339,13 @@ function onOrient(e){
 
 function afterPermission(){
   document.getElementById('start').style.display='none';
-  document.getElementById('radiusBtn').style.display='block';
+  // Mostra pulsante raggio solo se Pro, banner Pro se Free
+  if(PRO.isPro){
+    document.getElementById('radiusBtn').style.display='block';
+  } else {
+    document.getElementById('proBtn').style.display='block';
+    RADIUS = PRO.MAX_RADIUS_FREE; // forza 20km
+  }
   if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
     navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false})
       .then(function(s){ document.getElementById('vid').srcObject=s; })
@@ -417,7 +475,9 @@ function renderCompass(){
 function renderLabels(){
   document.querySelectorAll('.lbl').forEach(function(e){ e.remove(); });
   var W=window.innerWidth, H=window.innerHeight;
-  var vis=S.mountains.filter(function(m){ return Math.abs(angDiff(m.az,S.heading))<FOV/2+8; }).slice(0,20);
+  // Limita a 5 cime se Free
+  var maxLabels = PRO.isPro ? 20 : PRO.MAX_LABELS_FREE;
+  var vis=S.mountains.filter(function(m){ return Math.abs(angDiff(m.az,S.heading))<FOV/2+8; }).slice(0,maxLabels);
   // Disegna prima le più lontane (sotto) poi le più vicine (sopra)
   vis.sort(function(a,b){ return b.dist-a.dist; });
   vis.forEach(function(m){
@@ -461,28 +521,33 @@ var WMO_ICONS = {
 
 function showPopup(m, x, y){
   var ds = m.dist<1 ? Math.round(m.dist*1000)+' m' : m.dist.toFixed(1)+' km';
-  document.getElementById('popName').textContent    = m.n;
-  document.getElementById('popAlt').textContent     = m.a.toLocaleString()+' m';
-  document.getElementById('popDist').textContent    = ds;
-  document.getElementById('popCountry').textContent = m.c || '—';
-  document.getElementById('popAz').textContent      = Math.round(m.az)+'°';
+  document.getElementById('popName').textContent = m.n;
+  document.getElementById('popAlt').textContent  = m.a.toLocaleString()+' m';
+  document.getElementById('popDist').textContent = ds;
 
-  // Reset meteo
-  document.getElementById('popLoading').style.display    = 'block';
-  document.getElementById('popWeatherData').style.display = 'none';
-  document.getElementById('popLoading').textContent      = '⏳ Caricamento meteo...';
+  if(PRO.isPro){
+    // Mostra tutto
+    document.getElementById('popProData').style.display = 'block';
+    document.getElementById('popProLock').style.display = 'none';
+    document.getElementById('popCountry').textContent   = m.c || '—';
+    document.getElementById('popAz').textContent        = Math.round(m.az)+'°';
+    document.getElementById('popLoading').style.display     = 'block';
+    document.getElementById('popWeatherData').style.display = 'none';
+    document.getElementById('popLoading').textContent       = '⏳ Caricamento meteo...';
+    fetchWeather(m.lat, m.lon, m.a);
+  } else {
+    // Free: mostra lucchetto
+    document.getElementById('popProData').style.display = 'none';
+    document.getElementById('popProLock').style.display = 'block';
+  }
 
-  // Posiziona popup
   var pop = document.getElementById('popup');
   var W   = window.innerWidth;
   var px  = Math.min(Math.max(x, 130), W-130);
-  var py  = Math.max(y - 14, 320);
+  var py  = Math.max(y-14, 300);
   pop.style.left    = px+'px';
   pop.style.top     = py+'px';
   pop.style.display = 'block';
-
-  // Fetch meteo sulla cima (coordinata esatta della montagna)
-  fetchWeather(m.lat, m.lon, m.a);
 }
 
 function fetchWeather(lat, lon, altitude){
@@ -519,6 +584,12 @@ function fetchWeather(lat, lon, altitude){
     .catch(function(){
       document.getElementById('popLoading').textContent = '⚠️ Meteo non disponibile';
     });
+}
+
+function showProToast(msg){
+  var t=document.getElementById('proToast');
+  t.textContent=msg; t.style.display='block';
+  setTimeout(function(){ t.style.display='none'; },3000);
 }
 
 function closePopup(){ document.getElementById('popup').style.display='none'; }
