@@ -84,6 +84,23 @@ video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-inde
 #manualBtns button{background:rgba(56,189,248,.15);border:1px solid #38bdf8;
   color:#fff;padding:14px 22px;border-radius:12px;font-size:20px;cursor:pointer}
 
+/* Selettore raggio */
+#radiusPicker{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+  z-index:300;background:rgba(0,15,35,.97);border:1px solid rgba(56,189,248,.5);
+  border-radius:18px;padding:24px;min-width:280px;text-align:center;display:none;
+  backdrop-filter:blur(12px)}
+#radiusPicker h3{font-size:16px;font-weight:800;margin-bottom:6px}
+#radiusPicker p{font-size:11px;color:rgba(255,255,255,.5);margin-bottom:18px}
+.r-btn{display:block;width:100%;margin:8px 0;padding:13px;border-radius:12px;
+  border:1px solid rgba(56,189,248,.4);background:rgba(56,189,248,.08);
+  color:#fff;font-size:14px;font-weight:700;cursor:pointer;text-align:left}
+.r-btn.active{background:rgba(56,189,248,.25);border-color:#38bdf8}
+.r-btn span{font-size:11px;font-weight:400;color:rgba(255,255,255,.5);float:right;margin-top:2px}
+#radiusBtn{position:fixed;bottom:75px;left:14px;z-index:10;
+  background:rgba(0,15,35,.85);border:1px solid rgba(56,189,248,.4);
+  border-radius:20px;padding:7px 13px;font-size:11px;color:#38bdf8;
+  pointer-events:auto;cursor:pointer}
+
 /* Help box */
 #helpBox{display:none;margin-top:16px;background:rgba(0,0,0,.4);
   border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:16px;
@@ -147,6 +164,21 @@ video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-inde
   <div class="pop-row"><span>Paese</span><span class="pop-val" id="popCountry">—</span></div>
 </div>
 
+<!-- Selettore raggio -->
+<div id="radiusPicker">
+  <h3>🔭 Raggio di ricerca</h3>
+  <p>Più è grande, più è lento il caricamento</p>
+  <button class="r-btn" onclick="setRadius(20)">📍 20 km <span>Solo cime vicine – veloce</span></button>
+  <button class="r-btn" onclick="setRadius(50)">🗺️ 50 km <span>Buon compromesso</span></button>
+  <button class="r-btn active" onclick="setRadius(100)">⛰️ 100 km <span>Consigliato</span></button>
+  <button class="r-btn" onclick="setRadius(150)">🌍 150 km <span>Arco alpino da pianura</span></button>
+  <button onclick="document.getElementById('radiusPicker').style.display='none'"
+    style="margin-top:12px;background:none;border:none;color:rgba(255,255,255,.4);font-size:13px;cursor:pointer">Annulla</button>
+</div>
+
+<!-- Pulsante raggio in basso a sinistra -->
+<div id="radiusBtn" onclick="openRadiusPicker()">🔭 100 km</div>
+
 <!-- Controlli manuali -->
 <div id="manualBtns">
   <button ontouchstart="startTurn(-1)" ontouchend="stopTurn()">◀</button>
@@ -156,7 +188,7 @@ video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-inde
 <script>
 // ── CONFIG ────────────────────────────────────────────────────────────────
 var FOV = 65;
-var S = { lat:null, lon:null, heading:0, mountains:[], turnTimer:null };
+var S = { lat:null, lon:null, heading:0, mountains:[], turnTimer:null, radius:100 };
 
 // ── DB LOCALE (fallback) ──────────────────────────────────────────────────
 var DB = [
@@ -256,6 +288,28 @@ function afterPermission(){
     );
   } catch(e){ clearTimeout(emergency); S.lat=45.464; S.lon=9.190; loadPeaks(); }
   requestAnimationFrame(loop);
+}
+
+// ── RAGGIO ────────────────────────────────────────────────────────────────
+function openRadiusPicker(){
+  // Evidenzia il raggio attivo
+  document.querySelectorAll('.r-btn').forEach(function(b){ b.classList.remove('active'); });
+  var labels={20:'20',50:'50',100:'100',150:'150'};
+  document.querySelectorAll('.r-btn').forEach(function(b){
+    if(b.textContent.indexOf(labels[S.radius]+' km')!==-1) b.classList.add('active');
+  });
+  document.getElementById('radiusPicker').style.display='block';
+}
+
+function setRadius(km){
+  S.radius = km;
+  document.getElementById('radiusBtn').textContent = '🔭 '+km+' km';
+  document.getElementById('radiusPicker').style.display='none';
+  // Ricarica le cime con il nuovo raggio
+  if(S.lat !== null){
+    S.mountains = [];
+    loadPeaks();
+  }
 }
 
 // ── PEAKS ─────────────────────────────────────────────────────────────────
