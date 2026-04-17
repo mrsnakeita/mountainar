@@ -390,10 +390,19 @@ function loadPeaks(){
 }
 
 // ── LOOP ──────────────────────────────────────────────────────────────────
+var lastHeading = -999;
+var lastLabelCount = 0;
+
 function loop(){
   renderCompass();
-  renderLabels();
   renderRadar();
+  // Rigenera etichette solo se la direzione è cambiata di >1° o il numero di cime è cambiato
+  var headingDiff = Math.abs(angDiff(S.heading, lastHeading));
+  if(headingDiff > 1 || S.mountains.length !== lastLabelCount){
+    lastHeading    = S.heading;
+    lastLabelCount = S.mountains.length;
+    renderLabels();
+  }
   requestAnimationFrame(loop);
 }
 
