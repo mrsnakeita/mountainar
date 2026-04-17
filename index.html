@@ -47,7 +47,32 @@ video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-inde
 .lbl-name{font-size:11px;font-weight:700;white-space:nowrap}
 .lbl-alt{font-size:15px;font-weight:900;color:#38bdf8}
 .lbl-dist{font-size:9px;color:rgba(255,255,255,.5);margin-top:1px}
-.lbl-dot{width:6px;height:6px;background:#38bdf8;border-radius:50%;margin:3px auto 0;box-shadow:0 0 6px #38bdf8}
+/* ── Popup cima ── */
+#popup {
+  position: fixed;
+  z-index: 100;
+  background: rgba(0,15,35,.95);
+  border: 1px solid rgba(56,189,248,.6);
+  border-radius: 14px;
+  padding: 14px 16px;
+  min-width: 170px;
+  max-width: 230px;
+  pointer-events: auto;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 24px rgba(0,0,0,.5);
+  transform: translate(-50%, -110%);
+  animation: popIn .18s ease;
+}
+@keyframes popIn {
+  from { opacity:0; transform:translate(-50%,-90%) scale(.9); }
+  to   { opacity:1; transform:translate(-50%,-110%) scale(1); }
+}
+#popup .pop-name  { font-size:14px; font-weight:800; color:#fff; margin-bottom:6px; }
+#popup .pop-row   { display:flex; justify-content:space-between; align-items:center;
+                    font-size:12px; color:rgba(255,255,255,.6); margin-top:4px; }
+#popup .pop-val   { font-size:13px; font-weight:700; color:#38bdf8; margin-left:8px; }
+#popup .pop-close { position:absolute; top:8px; right:10px; font-size:14px;
+                    color:rgba(255,255,255,.4); cursor:pointer; line-height:1; }
 
 #panel{position:fixed;bottom:0;left:0;right:0;z-index:20;
   background:rgba(0,15,35,.96);border-top:1px solid rgba(56,189,248,.35);
@@ -108,6 +133,8 @@ video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-inde
   <button ontouchstart="startTurn(-1)" ontouchend="stopTurn()">◀</button>
   <button ontouchstart="startTurn(1)"  ontouchend="stopTurn()">▶</button>
 </div>
+
+<div id="popup" style="display:none"></div>
 
 <div id="panel">
   <button id="panelClose" onclick="closePanel()">✕</button>
@@ -768,21 +795,52 @@ function renderCompass(){
 function renderLabels(){
   document.querySelectorAll('.lbl').forEach(function(e){ e.remove(); });
   var W=window.innerWidth, H=window.innerHeight;
-  var vis = S.mountains.filter(function(m){ return Math.abs(angDiff(m.az,S.heading)) < FOV/2+8; });
-  vis.slice(0,10).forEach(function(m){
+
+  // Filtra le cime visibili nel campo visivo
+  var vis = S.mountains.filter(function(m){
+    return Math.abs(angDiff(m.az, S.heading)) < FOV/2 + 8;
+  }).slice(0, 20);
+
+  // Ordina per distanza DECRESCENTE — le più lontane si disegnano prima (sotto)
+  vis.sort(function(a,b){ return b.dist - a.dist; });
+
+  vis.forEach(function(m){
     var diff = angDiff(m.az, S.heading);
-    var x = W*(0.5 + diff/FOV);
-    var y = H*(0.28 + Math.min(m.dist/180,1)*0.38);
+    var x = W * (0.5 + diff / FOV);
+    var y = H * (0.28 + Math.min(m.dist / 150, 1) * 0.38);
+
+    // Opacità e colore in base alla distanza:
+    // vicine (0km) → 100% vivido, lontane (150km) → 40% sbiadito
+    var proximity = 1 - Math.min(m.dist / 150, 1); // 1=vicina, 0=lontana
+    var alpha     = 0.40 + proximity * 0.60;        // 0.40 → 1.00
+    var borderAlpha = 0.25 + proximity * 0.55;      // bordo cyan più o meno vivido
+    // Scala: le cime vicine sono leggermente più grandi
+    var scale = 0.80 + proximity * 0.28;            // 0.80 → 1.08
+
+    var ds = m.dist < 1 ? Math.round(m.dist * 1000) + 'm' : Math.round(m.dist) + 'km';
+
     var el = document.createElement('div');
     el.className = 'lbl';
-    el.style.left = x+'px';
-    el.style.top = y+'px';
-    var ds = m.dist<1 ? Math.round(m.dist*1000)+'m' : Math.round(m.dist)+'km';
-    el.innerHTML = '<div class="lbl-box"><div class="lbl-name">'+m.n+'</div>'
-      +'<div class="lbl-alt">'+m.a.toLocaleString()+' m</div>'
-      +'<div class="lbl-dist">'+ds+'</div></div>'
-      +'<div class="lbl-dot"></div>';
-    el.addEventListener('click', function(){ openPanel(m); });
+    el.style.left    = x + 'px';
+    el.style.top     = y + 'px';
+    el.style.opacity = alpha;
+    el.style.transform = 'translate(-50%, -100%) scale(' + scale + ')';
+    el.style.transformOrigin = 'bottom center';
+    el.style.zIndex  = Math.round(proximity * 100); // z-index basato sulla vicinanza
+
+    el.innerHTML =
+      '<div class="lbl-box" style="border-color:rgba(56,189,248,' + borderAlpha + ')">' +
+        '<div class="lbl-name">' + m.n + '</div>' +
+        '<div class="lbl-alt">' + m.a.toLocaleString() + ' m</div>' +
+        '<div class="lbl-dist">' + ds + '</div>' +
+      '</div>' +
+      '<div class="lbl-dot" style="opacity:' + alpha + ';box-shadow:0 0 ' + Math.round(4+proximity*6) + 'px #38bdf8"></div>';
+
+    el.addEventListener('click', function(e){
+      e.stopPropagation();
+      showPopup(m, x, y);
+    });
+
     document.getElementById('overlay').appendChild(el);
   });
 }
@@ -812,7 +870,37 @@ function renderRadar(){
 }
 
 // ── PANEL ─────────────────────────────────────────────────────────────────
-function openPanel(m){
+function showPopup(m, x, y){
+  var pop = document.getElementById('popup');
+  var ds  = m.dist < 1 ? Math.round(m.dist*1000)+' m' : m.dist.toFixed(1)+' km';
+  var country = m.c || '—';
+
+  pop.innerHTML =
+    '<div class="pop-close" onclick="closePopup()">✕</div>' +
+    '<div class="pop-name">' + m.n + '</div>' +
+    '<div class="pop-row"><span>Altitudine</span><span class="pop-val">' + m.a.toLocaleString() + ' m</span></div>' +
+    '<div class="pop-row"><span>Distanza</span><span class="pop-val">' + ds + '</span></div>' +
+    '<div class="pop-row"><span>Paese</span><span class="pop-val">' + country + '</span></div>';
+
+  // Posiziona il popup sopra l'etichetta, restando dentro lo schermo
+  var W = window.innerWidth;
+  var px = Math.min(Math.max(x, 120), W - 120);
+  pop.style.left    = px + 'px';
+  pop.style.top     = (y - 10) + 'px';
+  pop.style.display = 'block';
+}
+
+function closePopup(){
+  document.getElementById('popup').style.display = 'none';
+}
+
+// Chiudi popup toccando fuori
+document.addEventListener('click', function(e){
+  var pop = document.getElementById('popup');
+  if(pop && pop.style.display !== 'none' && !pop.contains(e.target)){
+    closePopup();
+  }
+});
   document.getElementById('pName').textContent = m.n;
   document.getElementById('pChain').textContent = m.ch||'—';
   document.getElementById('pAlt').textContent = m.a.toLocaleString()+' m';
