@@ -11,7 +11,7 @@ body{background:#0a1628;font-family:system-ui,sans-serif;color:#fff;overflow:hid
 video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0}
 #overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:2;pointer-events:none}
 
-/* ── Start ── */
+/* Start */
 #start{position:fixed;inset:0;z-index:50;background:linear-gradient(160deg,#0a1628,#0d2a40);
   display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center}
 #start h1{font-size:36px;font-weight:900;letter-spacing:4px;margin:16px 0 8px}
@@ -26,7 +26,7 @@ video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-inde
   border-radius:14px;padding:16px;font-size:12px;color:rgba(255,255,255,.75);
   text-align:left;line-height:2;max-width:340px}
 
-/* ── HUD ── */
+/* HUD */
 #hudTop{position:absolute;top:0;left:0;right:0;padding:12px 16px;
   background:linear-gradient(to bottom,rgba(0,0,0,.65),transparent);
   display:flex;justify-content:space-between;align-items:flex-start}
@@ -43,9 +43,9 @@ video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-inde
   background:linear-gradient(to top,rgba(0,0,0,.65),transparent)}
 #statusTxt{font-size:12px;color:rgba(255,255,255,.65);text-align:center}
 
-/* ── Etichette AR ── */
+/* Etichette AR */
 .lbl{position:absolute;pointer-events:auto;cursor:pointer;transform-origin:bottom center}
-.lbl-box{background:rgba(0,20,45,.82);border:1px solid rgba(56,189,248,.55);border-radius:10px;
+.lbl-box{border:1px solid rgba(56,189,248,.55);border-radius:10px;
   padding:6px 11px;text-align:center;backdrop-filter:blur(6px);min-width:88px;position:relative}
 .lbl-box::after{content:'';position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);
   border:4px solid transparent;border-top-color:rgba(56,189,248,.55)}
@@ -54,46 +54,50 @@ video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-inde
 .lbl-dist{font-size:9px;color:rgba(255,255,255,.5);margin-top:1px}
 .lbl-dot{width:6px;height:6px;background:#38bdf8;border-radius:50%;margin:3px auto 0;box-shadow:0 0 6px #38bdf8}
 
-/* Lucchetto Pro nel popup */
-.pop-pro{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);
-  border-radius:10px;padding:8px 10px;margin-top:6px;cursor:pointer;text-align:center}
-.pop-pro-label{font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.8px}
-.pop-pro-val{font-size:12px;color:#f59e0b;font-weight:700;margin-top:2px}
+/* Popup */
 #popup{position:fixed;z-index:200;display:none;
   background:rgba(0,15,35,.97);border:1px solid rgba(56,189,248,.7);
   border-radius:16px;padding:16px;min-width:210px;max-width:260px;
   pointer-events:auto;backdrop-filter:blur(14px);
-  box-shadow:0 4px 28px rgba(0,0,0,.7);
-  transform:translate(-50%,-100%)}
+  box-shadow:0 4px 28px rgba(0,0,0,.7);transform:translate(-50%,-100%)}
 .pop-close{position:absolute;top:10px;right:12px;font-size:16px;
-  color:rgba(255,255,255,.4);cursor:pointer;line-height:1;background:none;border:none}
+  color:rgba(255,255,255,.4);cursor:pointer;background:none;border:none;color:rgba(255,255,255,.5)}
 .pop-name{font-size:15px;font-weight:800;color:#fff;margin-bottom:10px;padding-right:20px;line-height:1.3}
-.pop-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+.pop-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}
 .pop-cell{background:rgba(255,255,255,.05);border-radius:8px;padding:7px 8px}
 .pop-cell-label{font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.8px}
 .pop-cell-val{font-size:13px;font-weight:800;color:#38bdf8;margin-top:2px}
 .pop-weather{background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.2);
   border-radius:10px;padding:8px 10px;margin-top:4px}
-.pop-weather-title{font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;
-  letter-spacing:.8px;margin-bottom:6px}
-.pop-weather-row{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+.pop-weather-title{font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.pop-weather-row{display:flex;justify-content:space-between}
 .pop-weather-item{text-align:center;flex:1}
 .pop-weather-icon{font-size:18px}
 .pop-weather-val{font-size:12px;font-weight:700;color:#fff;margin-top:2px}
 .pop-weather-sub{font-size:9px;color:rgba(255,255,255,.4)}
 #popLoading{font-size:11px;color:rgba(255,255,255,.4);text-align:center;padding:6px 0}
 
-/* ── Banner Pro ── */
-#proBtn{position:fixed;top:60px;right:14px;z-index:10;
+/* Lock Pro nel popup */
+.pop-pro{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);
+  border-radius:10px;padding:10px 12px;margin-top:6px;cursor:pointer;text-align:center}
+.pop-pro-label{font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.8px}
+.pop-pro-val{font-size:12px;color:#f59e0b;font-weight:700;margin-top:3px}
+.pop-pro-cta{font-size:11px;color:rgba(255,255,255,.4);margin-top:3px}
+
+/* Banner Pro */
+#proBtn{position:fixed;top:58px;right:14px;z-index:10;
   background:linear-gradient(135deg,#f59e0b,#d97706);
-  border:none;border-radius:20px;padding:7px 13px;
+  border:none;border-radius:20px;padding:7px 14px;
   font-size:11px;font-weight:800;color:#000;cursor:pointer;
-  pointer-events:auto;box-shadow:0 2px 12px rgba(245,158,11,.4);
-  display:none}
+  pointer-events:auto;box-shadow:0 2px 12px rgba(245,158,11,.4);display:none}
+
+/* Toast */
 #proToast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
   z-index:500;background:rgba(0,15,35,.97);border:1px solid #38bdf8;
   border-radius:14px;padding:16px 24px;font-size:14px;font-weight:700;
   color:#fff;text-align:center;display:none;pointer-events:none}
+
+/* Selettore raggio (solo Pro) */
 #radiusBtn{position:fixed;bottom:75px;left:14px;z-index:10;
   background:rgba(0,15,35,.85);border:1px solid rgba(56,189,248,.4);
   border-radius:20px;padding:7px 13px;font-size:11px;font-weight:700;
@@ -101,17 +105,40 @@ video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-inde
 #radiusPicker{position:fixed;bottom:110px;left:14px;z-index:300;display:none;
   background:rgba(0,15,35,.97);border:1px solid rgba(56,189,248,.5);
   border-radius:14px;padding:12px;min-width:200px;
-  pointer-events:auto;backdrop-filter:blur(12px);
-  box-shadow:0 4px 24px rgba(0,0,0,.6)}
-#radiusPicker p{font-size:10px;color:rgba(255,255,255,.4);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px}
+  pointer-events:auto;backdrop-filter:blur(12px);box-shadow:0 4px 24px rgba(0,0,0,.6)}
+#radiusPicker p{font-size:10px;color:rgba(255,255,255,.4);margin-bottom:8px;
+  text-transform:uppercase;letter-spacing:1px}
 .r-opt{display:block;width:100%;padding:10px 12px;margin:4px 0;
   background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.2);
-  border-radius:10px;color:#fff;font-size:13px;font-weight:600;
-  cursor:pointer;text-align:left}
+  border-radius:10px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;text-align:left}
 .r-opt.active{background:rgba(56,189,248,.2);border-color:#38bdf8;color:#38bdf8}
 .r-opt small{font-size:10px;font-weight:400;color:rgba(255,255,255,.4);float:right;margin-top:1px}
 
-/* ── Controlli manuali ── */
+/* Schermata Pro */
+#proScreen{position:fixed;inset:0;z-index:400;
+  background:rgba(0,10,25,.97);display:none;
+  flex-direction:column;align-items:center;justify-content:center;
+  padding:30px;text-align:center;backdrop-filter:blur(10px)}
+#proScreen h2{font-size:26px;font-weight:900;margin:16px 0 6px}
+#proScreen h2 span{color:#f59e0b}
+#proScreen p{font-size:13px;color:rgba(255,255,255,.6);margin-bottom:24px;line-height:1.7}
+.pro-features{width:100%;max-width:320px;margin-bottom:24px}
+.pro-feat{display:flex;align-items:center;gap:12px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;padding:12px 14px;margin-bottom:8px;text-align:left}
+.pro-feat-icon{font-size:20px;flex-shrink:0}
+.pro-feat-text{font-size:13px;color:rgba(255,255,255,.8)}
+.pro-feat-text strong{color:#fff;display:block;font-size:14px}
+#buyBtn{background:linear-gradient(135deg,#f59e0b,#d97706);border:none;
+  border-radius:50px;padding:16px 48px;font-size:17px;font-weight:800;
+  color:#000;cursor:pointer;box-shadow:0 8px 28px rgba(245,158,11,.35);width:100%;max-width:320px}
+#restoreBtn{margin-top:12px;background:none;border:none;
+  font-size:13px;color:rgba(255,255,255,.4);cursor:pointer}
+#closeProBtn{position:absolute;top:20px;right:20px;background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);border-radius:50%;width:36px;height:36px;
+  font-size:16px;color:rgba(255,255,255,.6);cursor:pointer}
+
+/* Controlli manuali */
 #manualBtns{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);
   z-index:10;display:none;gap:16px;pointer-events:auto}
 #manualBtns button{background:rgba(56,189,248,.15);border:1px solid #38bdf8;
@@ -165,80 +192,68 @@ video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-inde
   <div id="hudBot"><div id="statusTxt">—</div></div>
 </div>
 
-<!-- Banner Pro -->
-<button id="proBtn" onclick="PRO.purchase()">⭐ Pro 2,99€</button>
-<div id="proToast"></div>
-
 <!-- Popup cima -->
 <div id="popup">
   <button class="pop-close" onclick="closePopup()">✕</button>
   <div class="pop-name" id="popName">—</div>
   <div class="pop-grid">
-    <div class="pop-cell">
-      <div class="pop-cell-label">Altitudine</div>
-      <div class="pop-cell-val" id="popAlt">—</div>
-    </div>
-    <div class="pop-cell">
-      <div class="pop-cell-label">Distanza</div>
-      <div class="pop-cell-val" id="popDist">—</div>
-    </div>
+    <div class="pop-cell"><div class="pop-cell-label">Altitudine</div><div class="pop-cell-val" id="popAlt">—</div></div>
+    <div class="pop-cell"><div class="pop-cell-label">Distanza</div><div class="pop-cell-val" id="popDist">—</div></div>
   </div>
-  <!-- Paese + Azimut: Free mostra lucchetto, Pro mostra dati -->
   <div id="popProData">
-    <div class="pop-grid" style="margin-top:6px">
-      <div class="pop-cell">
-        <div class="pop-cell-label">Paese</div>
-        <div class="pop-cell-val" id="popCountry">—</div>
-      </div>
-      <div class="pop-cell">
-        <div class="pop-cell-label">Azimut</div>
-        <div class="pop-cell-val" id="popAz">—</div>
-      </div>
+    <div class="pop-grid">
+      <div class="pop-cell"><div class="pop-cell-label">Paese</div><div class="pop-cell-val" id="popCountry">—</div></div>
+      <div class="pop-cell"><div class="pop-cell-label">Azimut</div><div class="pop-cell-val" id="popAz">—</div></div>
     </div>
     <div class="pop-weather">
       <div class="pop-weather-title">☁️ Meteo sulla cima</div>
-      <div id="popLoading">Caricamento meteo...</div>
+      <div id="popLoading">⏳ Caricamento meteo...</div>
       <div id="popWeatherData" style="display:none">
         <div class="pop-weather-row">
-          <div class="pop-weather-item">
-            <div class="pop-weather-icon" id="wIcon">—</div>
-            <div class="pop-weather-val" id="wTemp">—</div>
-            <div class="pop-weather-sub">Temp.</div>
-          </div>
-          <div class="pop-weather-item">
-            <div class="pop-weather-val" id="wWind">—</div>
-            <div class="pop-weather-sub">Vento km/h</div>
-          </div>
-          <div class="pop-weather-item">
-            <div class="pop-weather-val" id="wHumid">—</div>
-            <div class="pop-weather-sub">Umidità</div>
-          </div>
-          <div class="pop-weather-item">
-            <div class="pop-weather-val" id="wVis">—</div>
-            <div class="pop-weather-sub">Visib. km</div>
-          </div>
+          <div class="pop-weather-item"><div class="pop-weather-icon" id="wIcon">—</div><div class="pop-weather-val" id="wTemp">—</div><div class="pop-weather-sub">Temp.</div></div>
+          <div class="pop-weather-item"><div class="pop-weather-val" id="wWind">—</div><div class="pop-weather-sub">Vento km/h</div></div>
+          <div class="pop-weather-item"><div class="pop-weather-val" id="wHumid">—</div><div class="pop-weather-sub">Umidità</div></div>
+          <div class="pop-weather-item"><div class="pop-weather-val" id="wVis">—</div><div class="pop-weather-sub">Visib. km</div></div>
         </div>
       </div>
     </div>
   </div>
-  <!-- Lucchetto Free -->
-  <div id="popProLock" class="pop-pro" onclick="PRO.purchase(); closePopup();" style="display:none">
+  <div id="popProLock" class="pop-pro" onclick="openProScreen();closePopup();" style="display:none">
     <div class="pop-pro-label">🔒 Funzione Pro</div>
     <div class="pop-pro-val">Paese · Azimut · Meteo</div>
-    <div style="font-size:10px;color:rgba(255,255,255,.5);margin-top:3px">Tocca per sbloccare · 2,99€</div>
+    <div class="pop-pro-cta">Tocca per sbloccare · 2,99€</div>
   </div>
 </div>
 
-<!-- Pulsante raggio -->
-<div id="radiusBtn" onclick="togglePicker()">🔭 100 km</div>
+<!-- Banner Pro -->
+<button id="proBtn" onclick="openProScreen()">⭐ Pro 2,99€</button>
+<div id="proToast"></div>
 
-<!-- Selettore raggio -->
+<!-- Selettore raggio (solo Pro) -->
+<div id="radiusBtn" onclick="togglePicker()">🔭 100 km</div>
 <div id="radiusPicker">
   <p>Raggio di ricerca</p>
   <button class="r-opt" data-km="20"  onclick="setRadius(20)">📍 20 km  <small>Veloce</small></button>
   <button class="r-opt" data-km="50"  onclick="setRadius(50)">🗺️ 50 km  <small>Bilanciato</small></button>
   <button class="r-opt active" data-km="100" onclick="setRadius(100)">⛰️ 100 km <small>Consigliato</small></button>
   <button class="r-opt" data-km="150" onclick="setRadius(150)">🌍 150 km <small>Arco alpino</small></button>
+</div>
+
+<!-- Schermata Pro -->
+<div id="proScreen">
+  <button id="closeProBtn" onclick="closeProScreen()">✕</button>
+  <div style="font-size:56px">⭐</div>
+  <h2>MOUNTAIN<span>AR PRO</span></h2>
+  <p>Sblocca tutte le funzionalità<br>con un acquisto unico</p>
+  <div class="pro-features">
+    <div class="pro-feat"><div class="pro-feat-icon">🌍</div><div class="pro-feat-text"><strong>Raggio fino a 150 km</strong>Vedi le cime a grande distanza</div></div>
+    <div class="pro-feat"><div class="pro-feat-icon">⛰️</div><div class="pro-feat-text"><strong>Cime illimitate</strong>Nessun limite di etichette sullo schermo</div></div>
+    <div class="pro-feat"><div class="pro-feat-icon">☁️</div><div class="pro-feat-text"><strong>Meteo sulla cima</strong>Temperatura, vento, umidità e visibilità</div></div>
+    <div class="pro-feat"><div class="pro-feat-icon">🗺️</div><div class="pro-feat-text"><strong>Paese e azimut</strong>Informazioni complete per ogni cima</div></div>
+    <div class="pro-feat"><div class="pro-feat-icon">♾️</div><div class="pro-feat-text"><strong>Per sempre</strong>Acquisto unico, nessun abbonamento</div></div>
+  </div>
+  <button id="buyBtn" onclick="PRO.purchase()">Acquista · 2,99€</button>
+  <button id="restoreBtn" onclick="PRO.restore()">Ripristina acquisti</button>
 </div>
 
 <!-- Controlli manuali -->
@@ -248,34 +263,41 @@ video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-inde
 </div>
 
 <script>
+// ── PRO MANAGER ───────────────────────────────────────────────────────────
+var PRO = {
+  isPro: localStorage.getItem('mtn_pro') === '1',
+  PRICE: '2,99€',
+  MAX_LABELS_FREE: 5,
+  RADIUS_FREE: 20,
+
+  purchase: function(){
+    // In produzione: StoreKit (iOS) / Play Billing (Android)
+    if(confirm('Acquistare Mountain AR Pro per ' + PRO.PRICE + '?\n\n✓ Raggio fino a 150km\n✓ Cime illimitate\n✓ Meteo sulla cima\n✓ Paese e azimut\n✓ Acquisto unico')){
+      PRO.unlock();
+    }
+  },
+  restore: function(){
+    var was = localStorage.getItem('mtn_pro');
+    if(was === '1'){ PRO.unlock(); }
+    else { showToast('Nessun acquisto da ripristinare'); }
+  },
+  unlock: function(){
+    localStorage.setItem('mtn_pro','1');
+    PRO.isPro = true;
+    closeProScreen();
+    document.getElementById('proBtn').style.display    = 'none';
+    document.getElementById('radiusBtn').style.display = 'block';
+    showToast('🎉 Pro attivato! Benvenuto.');
+    S.mountains = []; loadPeaks();
+  }
+};
+
+// ── CONFIG ────────────────────────────────────────────────────────────────
 var FOV    = 65;
 var RADIUS = 100;
 var S      = { lat:null, lon:null, heading:0, mountains:[], turnTimer:null };
 
-// ── PRO MANAGER ───────────────────────────────────────────────────────────
-var PRO = {
-  // In produzione questo verrà da StoreKit (iOS) o Play Billing (Android)
-  // Per ora usa localStorage per simulare l'acquisto
-  isPro: localStorage.getItem('mtn_pro') === '1',
-  PRICE: '2,99€',
-  MAX_LABELS_FREE: 5,
-  MAX_RADIUS_FREE: 20,
-
-  unlock: function(){
-    localStorage.setItem('mtn_pro','1');
-    PRO.isPro = true;
-    document.getElementById('proBtn').style.display='none';
-    showProToast('🎉 Versione Pro attivata!');
-    // Ricarica cime senza limiti
-    S.mountains=[]; loadPeaks();
-  },
-  // Simula acquisto (nell'app nativa sarà StoreKit)
-  purchase: function(){
-    if(confirm('Acquistare Mountain AR Pro per '+PRO.PRICE+'?\n\n✓ Raggio fino a 150km\n✓ Cime illimitate\n✓ Meteo sulla cima\n✓ Paese e azimut')){
-      PRO.unlock();
-    }
-  }
-};
+// ── DB LOCALE (fallback offline) ──────────────────────────────────────────
 var DB = [
   {n:"Monte Bianco",a:4808,lat:45.8326,lon:6.8652,c:"Italia/Francia",ch:"Alpi Occ."},
   {n:"Monte Rosa",a:4634,lat:45.9372,lon:7.8672,c:"Italia/Svizzera",ch:"Alpi Pennine"},
@@ -339,12 +361,14 @@ function onOrient(e){
 
 function afterPermission(){
   document.getElementById('start').style.display='none';
-  // Mostra pulsante raggio solo se Pro, banner Pro se Free
+  // Free: banner Pro, raggio fisso 20km
+  // Pro: selettore raggio
   if(PRO.isPro){
     document.getElementById('radiusBtn').style.display='block';
+    RADIUS=100;
   } else {
     document.getElementById('proBtn').style.display='block';
-    RADIUS = PRO.MAX_RADIUS_FREE; // forza 20km
+    RADIUS=PRO.RADIUS_FREE;
   }
   if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
     navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false})
@@ -364,8 +388,7 @@ function afterPermission(){
         if(done) return; done=true; clearTimeout(emergency);
         S.lat=p.coords.latitude; S.lon=p.coords.longitude;
         document.getElementById('iGps').textContent=S.lat.toFixed(3)+', '+S.lon.toFixed(3);
-        setStatus('✅ GPS OK');
-        loadPeaks();
+        setStatus('✅ GPS OK'); loadPeaks();
       },
       function(err){
         if(done) return; done=true; clearTimeout(emergency);
@@ -379,18 +402,16 @@ function afterPermission(){
   requestAnimationFrame(loop);
 }
 
-// ── RAGGIO ────────────────────────────────────────────────────────────────
+// ── RAGGIO (solo Pro) ─────────────────────────────────────────────────────
 function togglePicker(){
   var p=document.getElementById('radiusPicker');
-  p.style.display = p.style.display==='block' ? 'none' : 'block';
+  p.style.display=p.style.display==='block'?'none':'block';
 }
-
 function setRadius(km){
   RADIUS=km;
   document.getElementById('radiusBtn').textContent='🔭 '+km+' km';
-  // Aggiorna bottone attivo
   document.querySelectorAll('.r-opt').forEach(function(b){
-    b.classList.toggle('active', parseInt(b.getAttribute('data-km'))===km);
+    b.classList.toggle('active',parseInt(b.getAttribute('data-km'))===km);
   });
   document.getElementById('radiusPicker').style.display='none';
   if(S.lat!==null){ S.mountains=[]; loadPeaks(); }
@@ -398,19 +419,18 @@ function setRadius(km){
 
 // ── PEAKS ─────────────────────────────────────────────────────────────────
 function loadPeaks(){
-  setStatus('🗺️ Cerco cime entro '+RADIUS+'km...');
+  var R=RADIUS;
+  setStatus('🗺️ Cerco cime entro '+R+'km...');
   var fallback=DB.map(function(m){
     return {n:m.n,a:m.a,lat:m.lat,lon:m.lon,c:m.c,ch:m.ch,
       dist:haversine(S.lat,S.lon,m.lat,m.lon),az:bearing(S.lat,S.lon,m.lat,m.lon)};
-  }).filter(function(m){ return m.dist<=RADIUS; }).sort(function(a,b){ return a.dist-b.dist; });
+  }).filter(function(m){ return m.dist<=R; }).sort(function(a,b){ return a.dist-b.dist; });
   S.mountains=fallback;
   document.getElementById('iCount').textContent='Cime: '+fallback.length+' (locale)';
-
-  var tSec=RADIUS<=20?12:RADIUS<=50?18:RADIUS<=100?25:35;
-  var q='[out:json][timeout:'+tSec+'];node["natural"="peak"]["ele"](around:'+(RADIUS*1000)+','+S.lat+','+S.lon+');out 1000;';
+  var tSec=R<=20?12:R<=50?18:R<=100?25:35;
+  var q='[out:json][timeout:'+tSec+'];node["natural"="peak"]["ele"](around:'+(R*1000)+','+S.lat+','+S.lon+');out 1000;';
   var ctrl=new AbortController();
-  var timer=setTimeout(function(){ ctrl.abort(); setStatus('⚠️ Timeout – prova raggio minore'); },( tSec+3)*1000);
-
+  var timer=setTimeout(function(){ ctrl.abort(); setStatus('⚠️ Timeout – prova raggio minore'); },(tSec+3)*1000);
   fetch('https://overpass-api.de/api/interpreter?data='+encodeURIComponent(q),{signal:ctrl.signal})
     .then(function(r){ return r.json(); })
     .then(function(d){
@@ -422,22 +442,17 @@ function loadPeaks(){
           return {
             n:e.tags['name:'+lang]||e.tags['name:en']||e.tags.name||'Cima senza nome',
             a:Math.round(parseFloat(e.tags.ele)),
-            lat:e.lat,lon:e.lon,
-            c:e.tags['addr:country']||'',
-            ch:e.tags.mountain_range||'',
-            dist:haversine(S.lat,S.lon,e.lat,e.lon),
-            az:bearing(S.lat,S.lon,e.lat,e.lon)
+            lat:e.lat,lon:e.lon,c:e.tags['addr:country']||'',ch:e.tags.mountain_range||'',
+            dist:haversine(S.lat,S.lon,e.lat,e.lon),az:bearing(S.lat,S.lon,e.lat,e.lon)
           };
         })
-        .filter(function(m){ return m.dist<=RADIUS; })
+        .filter(function(m){ return m.dist<=R; })
         .sort(function(a,b){ return a.dist-b.dist; });
       if(peaks.length>0){
         S.mountains=peaks;
         document.getElementById('iCount').textContent='Cime: '+peaks.length;
-        setStatus('✅ '+peaks.length+' cime entro '+RADIUS+'km');
-      } else {
-        setStatus('⚠️ Nessuna cima – uso DB locale');
-      }
+        setStatus('✅ '+peaks.length+' cime entro '+R+'km');
+      } else { setStatus('⚠️ Nessuna cima – uso DB locale'); }
       setTimeout(function(){ setStatus(''); },3000);
     })
     .catch(function(){
@@ -448,17 +463,13 @@ function loadPeaks(){
 }
 
 // ── LOOP ──────────────────────────────────────────────────────────────────
-var lastHeading = -999;
-var lastLabelCount = 0;
-
+var lastHeading=-999, lastLabelCount=0;
 function loop(){
   renderCompass();
   renderRadar();
-  // Rigenera etichette solo se la direzione è cambiata di >1° o il numero di cime è cambiato
-  var headingDiff = Math.abs(angDiff(S.heading, lastHeading));
-  if(headingDiff > 1 || S.mountains.length !== lastLabelCount){
-    lastHeading    = S.heading;
-    lastLabelCount = S.mountains.length;
+  var hd=Math.abs(angDiff(S.heading,lastHeading));
+  if(hd>1||S.mountains.length!==lastLabelCount){
+    lastHeading=S.heading; lastLabelCount=S.mountains.length;
     renderLabels();
   }
   requestAnimationFrame(loop);
@@ -474,27 +485,24 @@ function renderCompass(){
 // ── LABELS ────────────────────────────────────────────────────────────────
 function renderLabels(){
   document.querySelectorAll('.lbl').forEach(function(e){ e.remove(); });
-  var W=window.innerWidth, H=window.innerHeight;
-  // Limita a 5 cime se Free
-  var maxLabels = PRO.isPro ? 20 : PRO.MAX_LABELS_FREE;
+  var W=window.innerWidth,H=window.innerHeight;
+  var maxLabels=PRO.isPro?20:PRO.MAX_LABELS_FREE;
   var vis=S.mountains.filter(function(m){ return Math.abs(angDiff(m.az,S.heading))<FOV/2+8; }).slice(0,maxLabels);
-  // Disegna prima le più lontane (sotto) poi le più vicine (sopra)
   vis.sort(function(a,b){ return b.dist-a.dist; });
   vis.forEach(function(m){
     var diff=angDiff(m.az,S.heading);
     var x=W*(0.5+diff/FOV);
     var y=H*(0.28+Math.min(m.dist/RADIUS,1)*0.38);
     var prox=1-Math.min(m.dist/RADIUS,1);
-    var alpha=0.15+prox*0.85;        // lontane quasi invisibili, vicine opache
-    var scale=0.72+prox*0.36;        // lontane piccole, vicine grandi
-    var zIdx=Math.round(prox*100);
-    var borderA=0.08+prox*0.75;      // bordo quasi assente in lontananza
-    var bgA=0.15+prox*0.75;          // sfondo scuro solo sulle vicine
+    var alpha=0.15+prox*0.85;
+    var scale=0.72+prox*0.36;
+    var borderA=0.08+prox*0.75;
+    var bgA=0.15+prox*0.75;
     var glowR=Math.round(2+prox*9);
     var ds=m.dist<1?Math.round(m.dist*1000)+'m':Math.round(m.dist)+'km';
     var el=document.createElement('div');
     el.className='lbl';
-    el.style.cssText='left:'+x+'px;top:'+y+'px;opacity:'+alpha+';transform:translate(-50%,-100%) scale('+scale+');z-index:'+zIdx;
+    el.style.cssText='left:'+x+'px;top:'+y+'px;opacity:'+alpha+';transform:translate(-50%,-100%) scale('+scale+');z-index:'+Math.round(prox*100);
     el.innerHTML=
       '<div class="lbl-box" style="border-color:rgba(56,189,248,'+borderA+');background:rgba(0,20,45,'+bgA+')">'+
         '<div class="lbl-name">'+m.n+'</div>'+
@@ -508,130 +516,89 @@ function renderLabels(){
 }
 
 // ── POPUP ─────────────────────────────────────────────────────────────────
-var WMO_ICONS = {
-  0:'☀️',1:'🌤️',2:'⛅',3:'☁️',
-  45:'🌫️',48:'🌫️',
-  51:'🌦️',53:'🌦️',55:'🌧️',
-  61:'🌧️',63:'🌧️',65:'🌧️',
-  71:'❄️',73:'❄️',75:'❄️',77:'🌨️',
-  80:'🌦️',81:'🌧️',82:'⛈️',
-  85:'❄️',86:'❄️',
-  95:'⛈️',96:'⛈️',99:'⛈️'
-};
+var WMO={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',
+  61:'🌧️',63:'🌧️',65:'🌧️',71:'❄️',73:'❄️',75:'❄️',77:'🌨️',
+  80:'🌦️',81:'🌧️',82:'⛈️',85:'❄️',86:'❄️',95:'⛈️',96:'⛈️',99:'⛈️'};
 
-function showPopup(m, x, y){
-  var ds = m.dist<1 ? Math.round(m.dist*1000)+' m' : m.dist.toFixed(1)+' km';
-  document.getElementById('popName').textContent = m.n;
-  document.getElementById('popAlt').textContent  = m.a.toLocaleString()+' m';
-  document.getElementById('popDist').textContent = ds;
-
+function showPopup(m,x,y){
+  var ds=m.dist<1?Math.round(m.dist*1000)+' m':m.dist.toFixed(1)+' km';
+  document.getElementById('popName').textContent=m.n;
+  document.getElementById('popAlt').textContent=m.a.toLocaleString()+' m';
+  document.getElementById('popDist').textContent=ds;
   if(PRO.isPro){
-    // Mostra tutto
-    document.getElementById('popProData').style.display = 'block';
-    document.getElementById('popProLock').style.display = 'none';
-    document.getElementById('popCountry').textContent   = m.c || '—';
-    document.getElementById('popAz').textContent        = Math.round(m.az)+'°';
-    document.getElementById('popLoading').style.display     = 'block';
-    document.getElementById('popWeatherData').style.display = 'none';
-    document.getElementById('popLoading').textContent       = '⏳ Caricamento meteo...';
-    fetchWeather(m.lat, m.lon, m.a);
+    document.getElementById('popProData').style.display='block';
+    document.getElementById('popProLock').style.display='none';
+    document.getElementById('popCountry').textContent=m.c||'—';
+    document.getElementById('popAz').textContent=Math.round(m.az)+'°';
+    document.getElementById('popLoading').style.display='block';
+    document.getElementById('popWeatherData').style.display='none';
+    fetchWeather(m.lat,m.lon,m.a);
   } else {
-    // Free: mostra lucchetto
-    document.getElementById('popProData').style.display = 'none';
-    document.getElementById('popProLock').style.display = 'block';
+    document.getElementById('popProData').style.display='none';
+    document.getElementById('popProLock').style.display='block';
   }
-
-  var pop = document.getElementById('popup');
-  var W   = window.innerWidth;
-  var px  = Math.min(Math.max(x, 130), W-130);
-  var py  = Math.max(y-14, 300);
-  pop.style.left    = px+'px';
-  pop.style.top     = py+'px';
-  pop.style.display = 'block';
+  var pop=document.getElementById('popup');
+  var px=Math.min(Math.max(x,130),window.innerWidth-130);
+  var py=Math.max(y-14,300);
+  pop.style.left=px+'px'; pop.style.top=py+'px'; pop.style.display='block';
 }
 
-function fetchWeather(lat, lon, altitude){
-  var url = 'https://api.open-meteo.com/v1/forecast'
-    + '?latitude='+lat
-    + '&longitude='+lon
-    + '&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weathercode,visibility'
-    + '&wind_speed_unit=kmh'
-    + '&timezone=auto';
-
-  fetch(url)
-    .then(function(r){ return r.json(); })
-    .then(function(d){
-      var c = d.current;
-      var code  = c.weathercode;
-      var temp  = Math.round(c.temperature_2m);
-      var wind  = Math.round(c.wind_speed_10m);
-      var humid = Math.round(c.relative_humidity_2m);
-      var vis   = c.visibility != null ? Math.round(c.visibility/1000) : '—';
-      var icon  = WMO_ICONS[code] || '🌡️';
-
-      // Correggi temperatura per quota (–0.65°C ogni 100m rispetto al livello del mare)
-      var tempAdj = Math.round(temp - (altitude / 100) * 0.65);
-
-      document.getElementById('wIcon').textContent  = icon;
-      document.getElementById('wTemp').textContent  = tempAdj+'°C';
-      document.getElementById('wWind').textContent  = wind;
-      document.getElementById('wHumid').textContent = humid+'%';
-      document.getElementById('wVis').textContent   = vis;
-
-      document.getElementById('popLoading').style.display     = 'none';
-      document.getElementById('popWeatherData').style.display = 'block';
-    })
-    .catch(function(){
-      document.getElementById('popLoading').textContent = '⚠️ Meteo non disponibile';
-    });
-}
-
-function showProToast(msg){
-  var t=document.getElementById('proToast');
-  t.textContent=msg; t.style.display='block';
-  setTimeout(function(){ t.style.display='none'; },3000);
+function fetchWeather(lat,lon,alt){
+  var url='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+
+    '&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weathercode,visibility&wind_speed_unit=kmh&timezone=auto';
+  fetch(url).then(function(r){ return r.json(); }).then(function(d){
+    var c=d.current;
+    document.getElementById('wIcon').textContent=WMO[c.weathercode]||'🌡️';
+    document.getElementById('wTemp').textContent=Math.round(c.temperature_2m-(alt/100)*0.65)+'°C';
+    document.getElementById('wWind').textContent=Math.round(c.wind_speed_10m);
+    document.getElementById('wHumid').textContent=Math.round(c.relative_humidity_2m)+'%';
+    document.getElementById('wVis').textContent=c.visibility!=null?Math.round(c.visibility/1000):'—';
+    document.getElementById('popLoading').style.display='none';
+    document.getElementById('popWeatherData').style.display='block';
+  }).catch(function(){
+    document.getElementById('popLoading').textContent='⚠️ Meteo non disponibile';
+  });
 }
 
 function closePopup(){ document.getElementById('popup').style.display='none'; }
 document.addEventListener('click',function(e){
   var pop=document.getElementById('popup');
   if(pop&&pop.style.display!=='none'&&!pop.contains(e.target)) closePopup();
+  var pk=document.getElementById('radiusPicker');
+  if(pk&&pk.style.display==='block'&&!pk.contains(e.target)&&e.target.id!=='radiusBtn') pk.style.display='none';
 });
+
+// ── PRO SCREEN ────────────────────────────────────────────────────────────
+function openProScreen(){ document.getElementById('proScreen').style.display='flex'; }
+function closeProScreen(){ document.getElementById('proScreen').style.display='none'; }
 
 // ── RADAR ─────────────────────────────────────────────────────────────────
 function renderRadar(){
   var cv=document.getElementById('radar'),ctx=cv.getContext('2d');
   var cx=38,cy=38,r=34,D2R=Math.PI/180;
   ctx.clearRect(0,0,76,76);
-  ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
-  ctx.fillStyle='rgba(0,15,35,.75)';ctx.fill();
+  ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fillStyle='rgba(0,15,35,.75)';ctx.fill();
   [.33,.66,1].forEach(function(s){
-    ctx.beginPath();ctx.arc(cx,cy,r*s,0,Math.PI*2);
-    ctx.strokeStyle='rgba(56,189,248,.15)';ctx.lineWidth=1;ctx.stroke();
+    ctx.beginPath();ctx.arc(cx,cy,r*s,0,Math.PI*2);ctx.strokeStyle='rgba(56,189,248,.15)';ctx.lineWidth=1;ctx.stroke();
   });
   var hr=(S.heading-90)*D2R,fv=(FOV/2)*D2R;
-  ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,hr-fv,hr+fv);ctx.closePath();
-  ctx.fillStyle='rgba(56,189,248,.12)';ctx.fill();
+  ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,hr-fv,hr+fv);ctx.closePath();ctx.fillStyle='rgba(56,189,248,.12)';ctx.fill();
   S.mountains.forEach(function(m){
     var az=(m.az-90)*D2R,d=Math.min(m.dist/RADIUS,1)*r*.88;
     var mx=cx+Math.cos(az)*d,my=cy+Math.sin(az)*d;
     var inV=Math.abs(angDiff(m.az,S.heading))<FOV/2;
-    ctx.beginPath();ctx.arc(mx,my,inV?2.5:1.5,0,Math.PI*2);
-    ctx.fillStyle=inV?'#38bdf8':'rgba(255,255,255,.3)';ctx.fill();
+    ctx.beginPath();ctx.arc(mx,my,inV?2.5:1.5,0,Math.PI*2);ctx.fillStyle=inV?'#38bdf8':'rgba(255,255,255,.3)';ctx.fill();
   });
-  ctx.fillStyle='#38bdf8';ctx.font='8px system-ui';ctx.textAlign='center';
-  ctx.fillText('N',cx,cy-r+9);
+  ctx.fillStyle='#38bdf8';ctx.font='8px system-ui';ctx.textAlign='center';ctx.fillText('N',cx,cy-r+9);
 }
 
-// ── MANUAL ────────────────────────────────────────────────────────────────
-function showManual(){
-  document.getElementById('manualBtns').style.display='flex';
-  setStatus('🧭 Bussola non disponibile – usa ◀ ▶');
-}
+// ── UTILS ─────────────────────────────────────────────────────────────────
+function showManual(){ document.getElementById('manualBtns').style.display='flex'; setStatus('🧭 Bussola non disponibile – usa ◀ ▶'); }
 function startTurn(d){ S.turnTimer=setInterval(function(){ S.heading=(S.heading+d*1.5+360)%360; },30); }
 function stopTurn(){ clearInterval(S.turnTimer); }
 function toggleHelp(){ var h=document.getElementById('helpBox'); h.style.display=h.style.display==='none'?'block':'none'; }
 function setStatus(t){ document.getElementById('statusTxt').textContent=t; }
+function showToast(msg){ var t=document.getElementById('proToast'); t.textContent=msg; t.style.display='block'; setTimeout(function(){ t.style.display='none'; },3000); }
 </script>
 </body>
 </html>
