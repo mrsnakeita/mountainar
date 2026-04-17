@@ -292,11 +292,10 @@ function afterPermission(){
 
 // ── RAGGIO ────────────────────────────────────────────────────────────────
 function openRadiusPicker(){
-  // Evidenzia il raggio attivo
-  document.querySelectorAll('.r-btn').forEach(function(b){ b.classList.remove('active'); });
-  var labels={20:'20',50:'50',100:'100',150:'150'};
   document.querySelectorAll('.r-btn').forEach(function(b){
-    if(b.textContent.indexOf(labels[S.radius]+' km')!==-1) b.classList.add('active');
+    b.classList.remove('active');
+    var km = parseInt(b.textContent);
+    if(km === S.radius) b.classList.add('active');
   });
   document.getElementById('radiusPicker').style.display='block';
 }
@@ -305,7 +304,6 @@ function setRadius(km){
   S.radius = km;
   document.getElementById('radiusBtn').textContent = '🔭 '+km+' km';
   document.getElementById('radiusPicker').style.display='none';
-  // Ricarica le cime con il nuovo raggio
   if(S.lat !== null){
     S.mountains = [];
     loadPeaks();
