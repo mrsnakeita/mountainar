@@ -57,16 +57,27 @@ video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-inde
 /* ── Popup tap ── */
 #popup{position:fixed;z-index:200;display:none;
   background:rgba(0,15,35,.97);border:1px solid rgba(56,189,248,.7);
-  border-radius:14px;padding:14px 16px 12px;min-width:180px;max-width:240px;
-  pointer-events:auto;backdrop-filter:blur(12px);
-  box-shadow:0 4px 24px rgba(0,0,0,.6);
+  border-radius:16px;padding:16px;min-width:210px;max-width:260px;
+  pointer-events:auto;backdrop-filter:blur(14px);
+  box-shadow:0 4px 28px rgba(0,0,0,.7);
   transform:translate(-50%,-100%)}
-.pop-close{position:absolute;top:8px;right:10px;font-size:15px;
-  color:rgba(255,255,255,.4);cursor:pointer;line-height:1}
-.pop-name{font-size:15px;font-weight:800;color:#fff;margin-bottom:8px;padding-right:16px}
-.pop-row{display:flex;justify-content:space-between;align-items:center;
-  font-size:11px;color:rgba(255,255,255,.55);margin-top:5px}
-.pop-val{font-size:12px;font-weight:700;color:#38bdf8;margin-left:8px;text-align:right}
+.pop-close{position:absolute;top:10px;right:12px;font-size:16px;
+  color:rgba(255,255,255,.4);cursor:pointer;line-height:1;background:none;border:none}
+.pop-name{font-size:15px;font-weight:800;color:#fff;margin-bottom:10px;padding-right:20px;line-height:1.3}
+.pop-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+.pop-cell{background:rgba(255,255,255,.05);border-radius:8px;padding:7px 8px}
+.pop-cell-label{font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.8px}
+.pop-cell-val{font-size:13px;font-weight:800;color:#38bdf8;margin-top:2px}
+.pop-weather{background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.2);
+  border-radius:10px;padding:8px 10px;margin-top:4px}
+.pop-weather-title{font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;
+  letter-spacing:.8px;margin-bottom:6px}
+.pop-weather-row{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+.pop-weather-item{text-align:center;flex:1}
+.pop-weather-icon{font-size:18px}
+.pop-weather-val{font-size:12px;font-weight:700;color:#fff;margin-top:2px}
+.pop-weather-sub{font-size:9px;color:rgba(255,255,255,.4)}
+#popLoading{font-size:11px;color:rgba(255,255,255,.4);text-align:center;padding:6px 0}
 
 /* ── Selettore raggio ── */
 #radiusBtn{position:fixed;bottom:75px;left:14px;z-index:10;
@@ -142,11 +153,51 @@ video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-inde
 
 <!-- Popup cima -->
 <div id="popup">
-  <div class="pop-close" onclick="closePopup()">✕</div>
+  <button class="pop-close" onclick="closePopup()">✕</button>
   <div class="pop-name" id="popName">—</div>
-  <div class="pop-row"><span>Altitudine</span><span class="pop-val" id="popAlt">—</span></div>
-  <div class="pop-row"><span>Distanza</span><span class="pop-val" id="popDist">—</span></div>
-  <div class="pop-row"><span>Paese</span><span class="pop-val" id="popCountry">—</span></div>
+  <div class="pop-grid">
+    <div class="pop-cell">
+      <div class="pop-cell-label">Altitudine</div>
+      <div class="pop-cell-val" id="popAlt">—</div>
+    </div>
+    <div class="pop-cell">
+      <div class="pop-cell-label">Distanza</div>
+      <div class="pop-cell-val" id="popDist">—</div>
+    </div>
+    <div class="pop-cell">
+      <div class="pop-cell-label">Paese</div>
+      <div class="pop-cell-val" id="popCountry">—</div>
+    </div>
+    <div class="pop-cell">
+      <div class="pop-cell-label">Azimut</div>
+      <div class="pop-cell-val" id="popAz">—</div>
+    </div>
+  </div>
+  <div class="pop-weather">
+    <div class="pop-weather-title">☁️ Meteo sulla cima</div>
+    <div id="popLoading">Caricamento meteo...</div>
+    <div id="popWeatherData" style="display:none">
+      <div class="pop-weather-row">
+        <div class="pop-weather-item">
+          <div class="pop-weather-icon" id="wIcon">—</div>
+          <div class="pop-weather-val" id="wTemp">—</div>
+          <div class="pop-weather-sub">Temp.</div>
+        </div>
+        <div class="pop-weather-item">
+          <div class="pop-weather-val" id="wWind">—</div>
+          <div class="pop-weather-sub">Vento km/h</div>
+        </div>
+        <div class="pop-weather-item">
+          <div class="pop-weather-val" id="wHumid">—</div>
+          <div class="pop-weather-sub">Umidità</div>
+        </div>
+        <div class="pop-weather-item">
+          <div class="pop-weather-val" id="wVis">—</div>
+          <div class="pop-weather-sub">Visib. km</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Pulsante raggio -->
@@ -387,18 +438,79 @@ function renderLabels(){
 }
 
 // ── POPUP ─────────────────────────────────────────────────────────────────
-function showPopup(m,x,y){
-  var ds=m.dist<1?Math.round(m.dist*1000)+' m':m.dist.toFixed(1)+' km';
-  document.getElementById('popName').textContent=m.n;
-  document.getElementById('popAlt').textContent=m.a.toLocaleString()+' m';
-  document.getElementById('popDist').textContent=ds;
-  document.getElementById('popCountry').textContent=m.c||'—';
-  var pop=document.getElementById('popup');
-  var px=Math.min(Math.max(x,125),window.innerWidth-125);
-  pop.style.left=px+'px';
-  pop.style.top=(y-14)+'px';
-  pop.style.display='block';
+var WMO_ICONS = {
+  0:'☀️',1:'🌤️',2:'⛅',3:'☁️',
+  45:'🌫️',48:'🌫️',
+  51:'🌦️',53:'🌦️',55:'🌧️',
+  61:'🌧️',63:'🌧️',65:'🌧️',
+  71:'❄️',73:'❄️',75:'❄️',77:'🌨️',
+  80:'🌦️',81:'🌧️',82:'⛈️',
+  85:'❄️',86:'❄️',
+  95:'⛈️',96:'⛈️',99:'⛈️'
+};
+
+function showPopup(m, x, y){
+  var ds = m.dist<1 ? Math.round(m.dist*1000)+' m' : m.dist.toFixed(1)+' km';
+  document.getElementById('popName').textContent    = m.n;
+  document.getElementById('popAlt').textContent     = m.a.toLocaleString()+' m';
+  document.getElementById('popDist').textContent    = ds;
+  document.getElementById('popCountry').textContent = m.c || '—';
+  document.getElementById('popAz').textContent      = Math.round(m.az)+'°';
+
+  // Reset meteo
+  document.getElementById('popLoading').style.display    = 'block';
+  document.getElementById('popWeatherData').style.display = 'none';
+  document.getElementById('popLoading').textContent      = '⏳ Caricamento meteo...';
+
+  // Posiziona popup
+  var pop = document.getElementById('popup');
+  var W   = window.innerWidth;
+  var px  = Math.min(Math.max(x, 130), W-130);
+  var py  = Math.max(y - 14, 320);
+  pop.style.left    = px+'px';
+  pop.style.top     = py+'px';
+  pop.style.display = 'block';
+
+  // Fetch meteo sulla cima (coordinata esatta della montagna)
+  fetchWeather(m.lat, m.lon, m.a);
 }
+
+function fetchWeather(lat, lon, altitude){
+  var url = 'https://api.open-meteo.com/v1/forecast'
+    + '?latitude='+lat
+    + '&longitude='+lon
+    + '&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weathercode,visibility'
+    + '&wind_speed_unit=kmh'
+    + '&timezone=auto';
+
+  fetch(url)
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      var c = d.current;
+      var code  = c.weathercode;
+      var temp  = Math.round(c.temperature_2m);
+      var wind  = Math.round(c.wind_speed_10m);
+      var humid = Math.round(c.relative_humidity_2m);
+      var vis   = c.visibility != null ? Math.round(c.visibility/1000) : '—';
+      var icon  = WMO_ICONS[code] || '🌡️';
+
+      // Correggi temperatura per quota (–0.65°C ogni 100m rispetto al livello del mare)
+      var tempAdj = Math.round(temp - (altitude / 100) * 0.65);
+
+      document.getElementById('wIcon').textContent  = icon;
+      document.getElementById('wTemp').textContent  = tempAdj+'°C';
+      document.getElementById('wWind').textContent  = wind;
+      document.getElementById('wHumid').textContent = humid+'%';
+      document.getElementById('wVis').textContent   = vis;
+
+      document.getElementById('popLoading').style.display     = 'none';
+      document.getElementById('popWeatherData').style.display = 'block';
+    })
+    .catch(function(){
+      document.getElementById('popLoading').textContent = '⚠️ Meteo non disponibile';
+    });
+}
+
 function closePopup(){ document.getElementById('popup').style.display='none'; }
 document.addEventListener('click',function(e){
   var pop=document.getElementById('popup');
