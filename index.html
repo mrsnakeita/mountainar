@@ -405,21 +405,40 @@ function renderLabels(){
   document.querySelectorAll('.lbl').forEach(function(e){ e.remove(); });
   var W=window.innerWidth,H=window.innerHeight;
   var vis=S.mountains.filter(function(m){ return Math.abs(angDiff(m.az,S.heading))<FOV/2+8; }).slice(0,20);
+  if(vis.length===0) return;
+
+  // Calcola min e max distanza tra le cime VISIBILI per normalizzare
+  var minDist=vis[0].dist, maxDist=vis[0].dist;
+  vis.forEach(function(m){
+    if(m.dist<minDist) minDist=m.dist;
+    if(m.dist>maxDist) maxDist=m.dist;
+  });
+  var range=maxDist-minDist;
+  // Se tutte le cime sono alla stessa distanza evita divisione per zero
+  if(range<0.5) range=0.5;
+
+  // Ordina per distanza decrescente: le più lontane si disegnano prima (sotto)
   vis.sort(function(a,b){ return b.dist-a.dist; });
+
   vis.forEach(function(m){
     var diff=angDiff(m.az,S.heading);
     var x=W*(0.5+diff/FOV);
     var y=H*(0.28+Math.min(m.dist/RADIUS,1)*0.38);
-    var prox=1-Math.min(m.dist/RADIUS,1);
-    var alpha=0.15+prox*0.85;
-    var scale=0.72+prox*0.36;
-    var borderA=0.08+prox*0.75;
-    var bgA=0.15+prox*0.75;
-    var glowR=Math.round(2+prox*9);
+
+    // prox: 1=la più vicina del gruppo, 0=la più lontana del gruppo
+    var prox=1-((m.dist-minDist)/range);
+
+    var alpha  = 0.25 + prox*0.75;   // 0.25 → 1.00
+    var scale  = 0.70 + prox*0.42;   // 0.70 → 1.12
+    var borderA= 0.15 + prox*0.85;   // bordo quasi invisibile → pieno
+    var bgA    = 0.10 + prox*0.80;   // sfondo quasi trasparente → scuro
+    var glowR  = Math.round(2+prox*10);
+    var zIdx   = Math.round(prox*100);
+
     var ds=m.dist<1?Math.round(m.dist*1000)+'m':Math.round(m.dist)+'km';
     var el=document.createElement('div');
     el.className='lbl';
-    el.style.cssText='left:'+x+'px;top:'+y+'px;opacity:'+alpha+';transform:translate(-50%,-100%) scale('+scale+');z-index:'+Math.round(prox*100);
+    el.style.cssText='left:'+x+'px;top:'+y+'px;opacity:'+alpha+';transform:translate(-50%,-100%) scale('+scale+');z-index:'+zIdx;
     el.innerHTML=
       '<div class="lbl-box" style="border-color:rgba(56,189,248,'+borderA+');background:rgba(0,20,45,'+bgA+')">'+
         '<div class="lbl-name">'+m.n+'</div>'+
