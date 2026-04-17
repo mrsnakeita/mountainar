@@ -1,118 +1,275 @@
-# Privacy Policy – Mountain AR
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy – Mountain AR</title>
+<style>
+  :root {
+    --bg: #0a1628;
+    --bg2: #0d1f3a;
+    --cyan: #38bdf8;
+    --text: #e2e8f0;
+    --muted: rgba(255,255,255,.5);
+    --border: rgba(56,189,248,.2);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.8;
+    padding: 0 16px 60px;
+  }
 
-**Last updated:** April 2025
-**Developer:** [Your name / company name]
-**Contact:** [your@email.com]
+  /* Header */
+  header {
+    background: linear-gradient(160deg, #0d2137, #0a1628);
+    border-bottom: 1px solid var(--border);
+    padding: 40px 24px 32px;
+    text-align: center;
+    margin: 0 -16px 40px;
+  }
+  .app-icon {
+    width: 72px; height: 72px;
+    background: var(--bg2);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+    font-size: 32px;
+  }
+  header h1 {
+    font-size: 22px; font-weight: 800;
+    letter-spacing: 1px; margin-bottom: 4px;
+  }
+  header h1 span { color: var(--cyan); }
+  header p { font-size: 13px; color: var(--muted); }
 
----
+  /* Container */
+  .container { max-width: 680px; margin: 0 auto; }
 
-## 1. Introduction
+  /* Sezioni */
+  section {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  section h2 {
+    font-size: 14px; font-weight: 700;
+    color: var(--cyan);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  section h3 {
+    font-size: 14px; font-weight: 700;
+    color: var(--text);
+    margin: 20px 0 8px;
+  }
+  section h3:first-of-type { margin-top: 0; }
+  p { color: rgba(255,255,255,.75); margin-bottom: 8px; }
+  p:last-child { margin-bottom: 0; }
 
-Mountain AR ("the app") is an augmented reality application that allows users to identify mountains through their device's camera. This Privacy Policy describes what data is collected, how it is used, and what rights you have as a user.
+  /* Badge dati non raccolti */
+  .no-collect {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-top: 10px;
+  }
+  .badge {
+    background: rgba(56,189,248,.08);
+    border: 1px solid rgba(56,189,248,.2);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .badge::before { content: '✕ '; color: rgba(255,100,100,.6); }
 
----
+  /* Tabella permessi */
+  table {
+    width: 100%; border-collapse: collapse;
+    margin-top: 8px; font-size: 13px;
+  }
+  th {
+    text-align: left; padding: 8px 12px;
+    background: rgba(56,189,248,.08);
+    color: var(--cyan);
+    font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
+  }
+  th:first-child { border-radius: 8px 0 0 0; }
+  th:last-child  { border-radius: 0 8px 0 0; }
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+    color: rgba(255,255,255,.75);
+    vertical-align: top;
+  }
+  td:first-child { color: #fff; font-weight: 600; white-space: nowrap; }
+  tr:last-child td { border-bottom: none; }
 
-## 2. Data Collected
+  /* Terze parti */
+  .third-party {
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+  .third-party:last-child { margin-bottom: 0; }
+  .third-party strong { color: #fff; font-size: 14px; }
+  .third-party p { font-size: 13px; margin: 4px 0 0; }
+  .third-party a { color: var(--cyan); text-decoration: none; font-size: 12px; }
 
-### 2.1 Location Data (GPS)
-- **What we collect:** the geographic position of the device (latitude and longitude)
-- **Why:** to calculate the distance and direction of nearby mountains
-- **How:** only during active use of the app, never in the background
-- **Retention:** location data is never saved or transmitted to third parties. It is used exclusively in real time on the device
+  /* GDPR check */
+  .check-list { list-style: none; margin-top: 8px; }
+  .check-list li {
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+    font-size: 14px;
+    color: rgba(255,255,255,.75);
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .check-list li:last-child { border-bottom: none; }
+  .check-list li::before {
+    content: '✓';
+    color: var(--cyan);
+    font-weight: 800;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
 
-### 2.2 Camera
-- **What we collect:** the video stream from the rear camera
-- **Why:** to display augmented reality on the screen
-- **How:** the video stream is never recorded, saved or transmitted. It is displayed only in real time on the device
+  /* Footer */
+  footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 2;
+  }
+  footer a { color: var(--cyan); text-decoration: none; }
+</style>
+</head>
+<body>
 
-### 2.3 Compass and Motion Sensors
-- **What we collect:** device orientation (compass, gyroscope)
-- **Why:** to calculate the direction the user is facing and position AR labels accordingly
-- **Retention:** sensor data is never saved or transmitted
+<header>
+  <div class="app-icon">🏔️</div>
+  <h1>MOUNTAIN<span>AR</span></h1>
+  <p>Privacy Policy &nbsp;·&nbsp; Last updated: April 2025</p>
+</header>
 
-### 2.4 Purchase Data (Pro version only)
-- **What we collect:** confirmation of in-app purchase via Apple App Store or Google Play Store
-- **Why:** to unlock Pro features
-- **Note:** payment data is handled exclusively by Apple or Google. The developer has no access to any financial information of the user
+<div class="container">
 
-### 2.5 Data We Do Not Collect
-The app does **not** collect or transmit:
-- Name, email or other personally identifiable information
-- Demographic data
-- Usage data or analytics
-- Advertising identifiers (IDFA/GAID)
-- Browsing history
-- Camera content (photos or videos)
+  <!-- Intro -->
+  <section>
+    <h2>📋 Introduction</h2>
+    <p>Mountain AR is an augmented reality app that identifies mountains through your device's camera. This Privacy Policy explains what data is collected, how it is used, and your rights as a user.</p>
+    <p>We believe in full transparency: <strong style="color:#fff">Mountain AR does not collect, store or sell any personal data.</strong></p>
+  </section>
 
----
+  <!-- Dati raccolti -->
+  <section>
+    <h2>📡 Data We Use</h2>
 
-## 3. Third-Party Services
+    <h3>📍 Location (GPS)</h3>
+    <p>Used to find mountains near you. Processed in real time on your device only — never saved or sent to any server.</p>
 
-The app uses the following external services to function:
+    <h3>📷 Camera</h3>
+    <p>Used to display the AR overlay. The video stream is never recorded, saved or transmitted.</p>
 
-### 3.1 OpenStreetMap / Overpass API
-- **Purpose:** download mountain peak data near the user's location
-- **Data transmitted:** approximate GPS coordinates (search radius)
-- **Privacy policy:** https://wiki.osmfoundation.org/wiki/Privacy_Policy
+    <h3>🧭 Compass & Motion Sensors</h3>
+    <p>Used to detect the direction your device is facing and position AR labels correctly. Never saved or transmitted.</p>
 
-### 3.2 Open-Meteo
-- **Purpose:** retrieve weather forecasts for mountain peaks (Pro version only)
-- **Data transmitted:** GPS coordinates of the selected peak
-- **Privacy policy:** https://open-meteo.com/en/terms
-- **Note:** Open-Meteo does not require registration and does not collect personal data
+    <h3>💳 Purchase Data (Pro only)</h3>
+    <p>In-app purchase confirmation is handled entirely by Apple or Google. We never receive or store any payment or financial information.</p>
 
-### 3.3 Apple App Store / Google Play Store
-- **Purpose:** in-app purchase management
-- **Data transmitted:** handled directly by Apple/Google according to their policies
-- **Apple Privacy Policy:** https://www.apple.com/legal/privacy/
-- **Google Privacy Policy:** https://policies.google.com/privacy
+    <h3>What we do NOT collect</h3>
+    <div class="no-collect">
+      <span class="badge">Personal information</span>
+      <span class="badge">Email or name</span>
+      <span class="badge">Analytics</span>
+      <span class="badge">Advertising ID</span>
+      <span class="badge">Photos or videos</span>
+      <span class="badge">Browsing history</span>
+      <span class="badge">Cookies</span>
+      <span class="badge">Tracking</span>
+    </div>
+  </section>
 
----
+  <!-- Permessi -->
+  <section>
+    <h2>🔐 Permissions Required</h2>
+    <table>
+      <tr><th>Permission</th><th>Reason</th></tr>
+      <tr><td>Location</td><td>Find mountains near your current position</td></tr>
+      <tr><td>Camera</td><td>Display augmented reality overlay</td></tr>
+      <tr><td>Motion sensors</td><td>Detect which direction you are facing</td></tr>
+    </table>
+  </section>
 
-## 4. Permissions Required
+  <!-- Terze parti -->
+  <section>
+    <h2>🌐 Third-Party Services</h2>
 
-| Permission | Reason |
-|------------|--------|
-| Location (while using the app) | Find mountains near the current position |
-| Camera | Display augmented reality |
-| Motion and orientation sensors | Detect the direction the device is facing |
+    <div class="third-party">
+      <strong>OpenStreetMap / Overpass API</strong>
+      <p>Downloads mountain peak data near your location. Only approximate GPS coordinates are transmitted.</p>
+      <a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy" target="_blank">View Privacy Policy →</a>
+    </div>
 
----
+    <div class="third-party">
+      <strong>Open-Meteo</strong>
+      <p>Provides weather forecasts for mountain peaks (Pro only). No registration required, no personal data collected.</p>
+      <a href="https://open-meteo.com/en/terms" target="_blank">View Terms →</a>
+    </div>
 
-## 5. GDPR Compliance (European Users)
+    <div class="third-party">
+      <strong>Apple App Store / Google Play</strong>
+      <p>Handles in-app purchases. All payment data is managed exclusively by Apple or Google.</p>
+      <a href="https://www.apple.com/legal/privacy/" target="_blank">Apple Policy →</a> &nbsp;
+      <a href="https://policies.google.com/privacy" target="_blank">Google Policy →</a>
+    </div>
+  </section>
 
-In compliance with the General Data Protection Regulation (GDPR – EU 2016/679):
+  <!-- GDPR -->
+  <section>
+    <h2>🇪🇺 GDPR Compliance</h2>
+    <ul class="check-list">
+      <li>No personally identifiable data is collected</li>
+      <li>GPS location is processed locally on your device only</li>
+      <li>No user profiling or behavioural tracking</li>
+      <li>No data transmitted for advertising purposes</li>
+      <li>No cookies or tracking systems</li>
+      <li>Compliant with EU Regulation 2016/679</li>
+    </ul>
+  </section>
 
-- The app does not collect personally identifiable data
-- GPS location is processed exclusively on the device
-- No user profiling is performed
-- No data is transmitted for advertising purposes
-- No cookies or tracking systems are present
+  <!-- Bambini -->
+  <section>
+    <h2>👶 Children's Privacy</h2>
+    <p>Mountain AR does not knowingly collect data from children under 13. The app contains no inappropriate content and is suitable for all ages.</p>
+  </section>
 
-Since the app does not collect or store personal data, explicit consent under Art. 6 GDPR is not required for the data processing described above.
+  <!-- Contatti -->
+  <section>
+    <h2>✉️ Contact</h2>
+    <p>For any privacy-related questions:</p>
+    <p><strong style="color:#fff">Developer:</strong> [Your name / company]</p>
+    <p><strong style="color:#fff">Email:</strong> <a href="mailto:your@email.com" style="color:var(--cyan)">your@email.com</a></p>
+    <p><strong style="color:#fff">Country:</strong> Italy</p>
+  </section>
 
----
+</div>
 
-## 6. Children's Privacy
+<footer>
+  Mountain AR &nbsp;·&nbsp; Privacy Policy<br>
+  This policy may be updated periodically. Last updated: April 2025<br><br>
+  <a href="https://mrsnakeita.github.io/mountainar/">← Back to app</a>
+</footer>
 
-The app does not knowingly collect data from children under the age of 13. It contains no content inappropriate for minors and is suitable for all ages.
-
----
-
-## 7. Changes to This Privacy Policy
-
-Any changes to this Privacy Policy will be posted on this page with an updated date at the top. Users are encouraged to review this page periodically.
-
----
-
-## 8. Contact
-
-For any questions regarding privacy:
-
-**Email:** [your@email.com]
-**Developer:** [Your name / company name]
-**Country:** Italy
-
----
-
-*Questa Privacy Policy è disponibile anche in italiano su richiesta.*
+</body>
+</html>
