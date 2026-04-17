@@ -11,6 +11,7 @@ body{background:#0a1628;font-family:system-ui,sans-serif;color:#fff;overflow:hid
 video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0}
 #overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:2;pointer-events:none}
 
+/* Start */
 #start{position:fixed;inset:0;z-index:50;background:linear-gradient(160deg,#0a1628,#0d2a40);
   display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center}
 #start h1{font-size:36px;font-weight:900;letter-spacing:4px;margin:16px 0 8px}
@@ -20,26 +21,25 @@ video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-inde
   padding:18px 48px;font-size:17px;font-weight:700;color:#fff;cursor:pointer;
   box-shadow:0 8px 32px rgba(56,189,248,.35)}
 
+/* HUD */
 #hudTop{position:absolute;top:0;left:0;right:0;padding:12px 16px;
   background:linear-gradient(to bottom,rgba(0,0,0,.65),transparent);
   display:flex;justify-content:space-between;align-items:flex-start}
 #logo{font-size:18px;font-weight:800;letter-spacing:2px}
 #logo span{color:#38bdf8}
 #info{font-size:10px;color:rgba(255,255,255,.75);text-align:right;line-height:1.8}
-
 #compassWrap{position:absolute;top:58px;left:50%;transform:translateX(-50%);width:260px;text-align:center}
 #compassOuter{overflow:hidden;white-space:nowrap;position:relative;height:16px}
 #compassLine{display:inline-block;font-size:11px;color:rgba(255,255,255,.65);letter-spacing:2px}
 #compassCursor{width:2px;height:16px;background:#38bdf8;position:absolute;top:0;left:50%;transform:translateX(-50%)}
 #compassDeg{font-size:13px;font-weight:700;color:#38bdf8;margin-top:3px}
-
 #radarWrap{position:absolute;bottom:70px;right:14px}
-
 #hudBot{position:absolute;bottom:0;left:0;right:0;padding:10px 16px 22px;
   background:linear-gradient(to top,rgba(0,0,0,.65),transparent)}
 #statusTxt{font-size:12px;color:rgba(255,255,255,.65);text-align:center}
 
-.lbl{position:absolute;transform:translate(-50%,-100%);pointer-events:auto;cursor:pointer}
+/* Etichette AR */
+.lbl{position:absolute;pointer-events:auto;cursor:pointer;transform-origin:bottom center}
 .lbl-box{background:rgba(0,20,45,.82);border:1px solid rgba(56,189,248,.55);border-radius:10px;
   padding:6px 11px;text-align:center;backdrop-filter:blur(6px);min-width:88px;position:relative}
 .lbl-box::after{content:'';position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);
@@ -47,33 +47,23 @@ video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-inde
 .lbl-name{font-size:11px;font-weight:700;white-space:nowrap}
 .lbl-alt{font-size:15px;font-weight:900;color:#38bdf8}
 .lbl-dist{font-size:9px;color:rgba(255,255,255,.5);margin-top:1px}
-/* ── Popup cima ── */
-#popup {
-  position: fixed;
-  z-index: 100;
-  background: rgba(0,15,35,.95);
-  border: 1px solid rgba(56,189,248,.6);
-  border-radius: 14px;
-  padding: 14px 16px;
-  min-width: 170px;
-  max-width: 230px;
-  pointer-events: auto;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 24px rgba(0,0,0,.5);
-  transform: translate(-50%, -110%);
-  animation: popIn .18s ease;
-}
-@keyframes popIn {
-  from { opacity:0; transform:translate(-50%,-90%) scale(.9); }
-  to   { opacity:1; transform:translate(-50%,-110%) scale(1); }
-}
-#popup .pop-name  { font-size:14px; font-weight:800; color:#fff; margin-bottom:6px; }
-#popup .pop-row   { display:flex; justify-content:space-between; align-items:center;
-                    font-size:12px; color:rgba(255,255,255,.6); margin-top:4px; }
-#popup .pop-val   { font-size:13px; font-weight:700; color:#38bdf8; margin-left:8px; }
-#popup .pop-close { position:absolute; top:8px; right:10px; font-size:14px;
-                    color:rgba(255,255,255,.4); cursor:pointer; line-height:1; }
+.lbl-dot{width:6px;height:6px;background:#38bdf8;border-radius:50%;margin:3px auto 0;box-shadow:0 0 6px #38bdf8}
 
+/* Popup tap */
+#popup{position:fixed;z-index:200;display:none;
+  background:rgba(0,15,35,.97);border:1px solid rgba(56,189,248,.7);
+  border-radius:14px;padding:14px 16px 12px;min-width:180px;max-width:240px;
+  pointer-events:auto;backdrop-filter:blur(12px);
+  box-shadow:0 4px 24px rgba(0,0,0,.6);
+  transform:translate(-50%,-100%)}
+.pop-close{position:absolute;top:8px;right:10px;font-size:15px;
+  color:rgba(255,255,255,.4);cursor:pointer;line-height:1}
+.pop-name{font-size:15px;font-weight:800;color:#fff;margin-bottom:8px;padding-right:16px}
+.pop-row{display:flex;justify-content:space-between;align-items:center;
+  font-size:11px;color:rgba(255,255,255,.55);margin-top:5px}
+.pop-val{font-size:12px;font-weight:700;color:#38bdf8;margin-left:8px;text-align:right}
+
+/* Panel dettaglio (Pro) */
 #panel{position:fixed;bottom:0;left:0;right:0;z-index:20;
   background:rgba(0,15,35,.96);border-top:1px solid rgba(56,189,248,.35);
   border-radius:20px 20px 0 0;padding:22px;
@@ -88,22 +78,41 @@ video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-inde
 .clabel{font-size:9px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:1px}
 .cval{font-size:18px;font-weight:800;color:#38bdf8;margin-top:3px}
 
+/* Controlli manuali */
 #manualBtns{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);
   z-index:10;display:none;gap:16px;pointer-events:auto}
 #manualBtns button{background:rgba(56,189,248,.15);border:1px solid #38bdf8;
   color:#fff;padding:14px 22px;border-radius:12px;font-size:20px;cursor:pointer}
+
+/* Help box */
+#helpBox{display:none;margin-top:16px;background:rgba(0,0,0,.4);
+  border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:16px;
+  font-size:12px;color:rgba(255,255,255,.75);text-align:left;
+  line-height:2;max-width:340px}
 </style>
 </head>
 <body>
 
+<!-- Start -->
 <div id="start">
   <div style="font-size:60px">🏔️</div>
   <h1>MOUNTAIN<span>AR</span></h1>
-  <p>Punta la fotocamera verso le montagne e scopri<br>nome, altezza e distanza in realtà aumentata.</p>
+  <p>Punta la fotocamera verso le montagne e scopri nome, altezza e distanza in realtà aumentata.</p>
   <button id="startBtn" onclick="onAvvia()">▶ AVVIA</button>
   <div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:14px;line-height:1.8">
     Richiede: 📍 GPS &nbsp; 📷 Fotocamera &nbsp; 🧭 Bussola<br>
     <span style="color:#fbbf24">⚠️ Usare Safari su iPhone</span>
+  </div>
+  <button onclick="toggleHelp()" style="margin-top:20px;background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:8px 20px;
+    font-size:12px;color:rgba(255,255,255,.6);cursor:pointer">⚙️ Problemi con i permessi?</button>
+  <div id="helpBox">
+    <strong style="color:#38bdf8">📍 GPS non funziona?</strong><br>
+    Impostazioni → Privacy → Servizi di localizzazione → Safari → <em>Mentre uso l'app</em><br><br>
+    <strong style="color:#38bdf8">🧭 Bussola non chiede il permesso?</strong><br>
+    Impostazioni → Safari → Avanzate → Dati dei siti web → cerca il sito → Elimina, poi ricarica.<br><br>
+    <strong style="color:#38bdf8">📷 Fotocamera non funziona?</strong><br>
+    Impostazioni → Safari → Fotocamera → <em>Consenti</em>
   </div>
 </div>
 
@@ -113,14 +122,14 @@ video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-inde
   <div id="hudTop">
     <div id="logo">MTN<span>AR</span></div>
     <div id="info">
-      <div id="iGps"></div>
-      <div id="iHead"></div>
-      <div id="iCount"></div>
+      <div id="iGps">GPS: —</div>
+      <div id="iHead">Dir: —</div>
+      <div id="iCount">Cime: —</div>
     </div>
   </div>
   <div id="compassWrap">
     <div id="compassOuter">
-      <div id="compassLine"></div>
+      <div id="compassLine">N · · NE · · E · · SE · · S · · SO · · O · · NO · · N · · NE · · E · · SE · · S · · SO</div>
       <div id="compassCursor"></div>
     </div>
     <div id="compassDeg">—°</div>
@@ -129,22 +138,19 @@ video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-inde
   <div id="hudBot"><div id="statusTxt">—</div></div>
 </div>
 
+<!-- Popup tap cima -->
+<div id="popup">
+  <div class="pop-close" onclick="closePopup()">✕</div>
+  <div class="pop-name" id="popName">—</div>
+  <div class="pop-row"><span>Altitudine</span><span class="pop-val" id="popAlt">—</span></div>
+  <div class="pop-row"><span>Distanza</span><span class="pop-val" id="popDist">—</span></div>
+  <div class="pop-row"><span>Paese</span><span class="pop-val" id="popCountry">—</span></div>
+</div>
+
+<!-- Controlli manuali -->
 <div id="manualBtns">
   <button ontouchstart="startTurn(-1)" ontouchend="stopTurn()">◀</button>
   <button ontouchstart="startTurn(1)"  ontouchend="stopTurn()">▶</button>
-</div>
-
-<div id="popup" style="display:none"></div>
-
-<div id="panel">
-  <button id="panelClose" onclick="closePanel()">✕</button>
-  <div id="pName">—</div><div id="pChain">—</div>
-  <div class="grid">
-    <div class="cell"><div class="clabel" id="lAlt"></div><div class="cval" id="pAlt">—</div></div>
-    <div class="cell"><div class="clabel" id="lDist"></div><div class="cval" id="pDist">—</div></div>
-    <div class="cell"><div class="clabel" id="lCountry"></div><div class="cval" id="pCountry" style="font-size:13px">—</div></div>
-    <div class="cell"><div class="clabel" id="lAz"></div><div class="cval" id="pAz">—</div></div>
-  </div>
 </div>
 
 <script>
@@ -152,494 +158,34 @@ video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-inde
 var FOV = 65;
 var S = { lat:null, lon:null, heading:0, mountains:[], turnTimer:null };
 
-// ── I18N ──────────────────────────────────────────────────────────────────
-var LANG = (navigator.language || 'en').substring(0,2).toLowerCase();
-var T = {
-  it: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'Punta la fotocamera verso le montagne e scopri nome, altezza e distanza in realtà aumentata.',
-    start:'▶ AVVIA',
-    perms:'Richiede: 📍 GPS &nbsp; 📷 Fotocamera &nbsp; 🧭 Bussola',
-    safari:'⚠️ Usare Safari su iPhone',
-    gps:'GPS: —', dir:'Dir: —', peaks:'Cime: —',
-    loadingPeaks:'🗺️ Ricerca cime entro 20km...',
-    camera:'📷 Avvio fotocamera...', gpsAcq:'📍 Acquisizione GPS...',
-    compassOk:'🧭 Bussola attiva', compassNo:'🧭 Bussola non disponibile – usa ◀ ▶',
-    found:'✅ {n} cime trovate entro 150km', noPeaks:'⚠️ Nessuna cima > 200m entro 150km',
-    offline:'⚠️ Offline – {n} cime dal DB locale',
-    altitude:'Altitudine', distance:'Distanza', country:'Paese', azimuth:'Azimut',
-    unnamed:'Cima senza nome', demo:'Demo (Milano)',
-    directions:['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSO','SO','OSO','O','ONO','NO','NNO'],
-    compass:'N · · NE · · E · · SE · · S · · SO · · O · · NO · · N · · NE · · E · · SE · · S · · SO'
-  },
-  en: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'Point your camera at the mountains to discover their name, height and distance in augmented reality.',
-    start:'▶ START',
-    perms:'Requires: 📍 GPS &nbsp; 📷 Camera &nbsp; 🧭 Compass',
-    safari:'⚠️ Use Safari on iPhone',
-    gps:'GPS: —', dir:'Dir: —', peaks:'Peaks: —',
-    loadingPeaks:'🗺️ Searching peaks within 20km...',
-    camera:'📷 Starting camera...', gpsAcq:'📍 Getting GPS...',
-    compassOk:'🧭 Compass active', compassNo:'🧭 Compass unavailable – use ◀ ▶',
-    found:'✅ {n} peaks found within 20km', noPeaks:'⚠️ No peak > 200m within 20km',
-    offline:'⚠️ Offline – {n} peaks from local DB',
-    altitude:'Altitude', distance:'Distance', country:'Country', azimuth:'Azimuth',
-    unnamed:'Unnamed peak', demo:'Demo (Milan)',
-    directions:['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSO','SO','OSO','O','ONO','NO','NNO'],
-    compass:'N · · NE · · E · · SE · · S · · SO · · O · · NO · · N · · NE · · E · · SE · · S · · SO'
-  },
-  fr: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'Pointez votre caméra vers les montagnes pour découvrir leur nom, altitude et distance en réalité augmentée.',
-    start:'▶ DÉMARRER',
-    perms:'Nécessite: 📍 GPS &nbsp; 📷 Caméra &nbsp; 🧭 Boussole',
-    safari:'⚠️ Utiliser Safari sur iPhone',
-    gps:'GPS: —', dir:'Dir: —', peaks:'Sommets: —',
-    loadingPeaks:'🗺️ Recherche sommets dans 20km...',
-    camera:'📷 Démarrage caméra...', gpsAcq:'📍 Acquisition GPS...',
-    compassOk:'🧭 Boussole active', compassNo:'🧭 Boussole indisponible – utilisez ◀ ▶',
-    found:'✅ {n} sommets trouvés dans 20km', noPeaks:'⚠️ Aucun sommet > 200m dans 20km',
-    offline:'⚠️ Hors ligne – {n} sommets depuis DB locale',
-    altitude:'Altitude', distance:'Distance', country:'Pays', azimuth:'Azimut',
-    unnamed:'Sommet sans nom', demo:'Démo (Milan)',
-    directions:['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSO','SO','OSO','O','ONO','NO','NNO'],
-    compass:'N · · NE · · E · · SE · · S · · SO · · O · · NO · · N · · NE · · E · · SE · · S · · SO'
-  },
-  de: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'Richte die Kamera auf die Berge und entdecke Name, Höhe und Entfernung in Augmented Reality.',
-    start:'▶ STARTEN',
-    perms:'Benötigt: 📍 GPS &nbsp; 📷 Kamera &nbsp; 🧭 Kompass',
-    safari:'⚠️ Safari auf iPhone verwenden',
-    gps:'GPS: —', dir:'Richt: —', peaks:'Gipfel: —',
-    loadingPeaks:'🗺️ Suche Gipfel im 20km-Radius...',
-    camera:'📷 Kamera starten...', gpsAcq:'📍 GPS erfassen...',
-    compassOk:'🧭 Kompass aktiv', compassNo:'🧭 Kompass nicht verfügbar – ◀ ▶ nutzen',
-    found:'✅ {n} Gipfel im 20km-Radius gefunden', noPeaks:'⚠️ Kein Gipfel > 200m im 20km-Radius',
-    offline:'⚠️ Offline – {n} Gipfel aus lokaler DB',
-    altitude:'Höhe', distance:'Entfernung', country:'Land', azimuth:'Azimut',
-    unnamed:'Unbenannter Gipfel', demo:'Demo (Mailand)',
-    directions:['N','NNO','NO','ONO','O','OSO','SO','SSO','S','SSW','SW','WSW','W','WNW','NW','NNW'],
-    compass:'N · · NO · · O · · SO · · S · · SW · · W · · NW · · N · · NO · · O · · SO · · S · · SW'
-  },
-  es: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'Apunta la cámara hacia las montañas y descubre su nombre, altura y distancia en realidad aumentada.',
-    start:'▶ INICIAR',
-    perms:'Requiere: 📍 GPS &nbsp; 📷 Cámara &nbsp; 🧭 Brújula',
-    safari:'⚠️ Usar Safari en iPhone',
-    gps:'GPS: —', dir:'Dir: —', peaks:'Cumbres: —',
-    loadingPeaks:'🗺️ Buscando cumbres en 20km...',
-    camera:'📷 Iniciando cámara...', gpsAcq:'📍 Obteniendo GPS...',
-    compassOk:'🧭 Brújula activa', compassNo:'🧭 Brújula no disponible – usa ◀ ▶',
-    found:'✅ {n} cumbres encontradas en 20km', noPeaks:'⚠️ Sin cumbres > 200m en 20km',
-    offline:'⚠️ Sin conexión – {n} cumbres desde DB local',
-    altitude:'Altitud', distance:'Distancia', country:'País', azimuth:'Acimut',
-    unnamed:'Cumbre sin nombre', demo:'Demo (Milán)',
-    directions:['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSO','SO','OSO','O','ONO','NO','NNO'],
-    compass:'N · · NE · · E · · SE · · S · · SO · · O · · NO · · N · · NE · · E · · SE · · S · · SO'
-  },
-  // ── Lingue EU aggiuntive ──────────────────────────────────────────────
-  pt: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'Aponte a câmera para as montanhas e descubra nome, altitude e distância em realidade aumentada.',
-    start:'▶ INICIAR', perms:'Requer: 📍 GPS &nbsp; 📷 Câmera &nbsp; 🧭 Bússola',
-    safari:'⚠️ Use o Safari no iPhone',
-    gps:'GPS: —', dir:'Dir: —', peaks:'Picos: —',
-    loadingPeaks:'🗺️ Procurando picos em 20km...',
-    camera:'📷 Iniciando câmera...', gpsAcq:'📍 Obtendo GPS...',
-    compassOk:'🧭 Bússola ativa', compassNo:'🧭 Bússola indisponível – use ◀ ▶',
-    found:'✅ {n} picos encontrados em 20km', noPeaks:'⚠️ Sem picos > 200m em 20km',
-    offline:'⚠️ Offline – {n} picos do DB local',
-    altitude:'Altitude', distance:'Distância', country:'País', azimuth:'Azimute',
-    unnamed:'Pico sem nome', demo:'Demo (Milão)',
-    directions:['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSO','SO','OSO','O','ONO','NO','NNO'],
-    compass:'N · · NE · · E · · SE · · S · · SO · · O · · NO · · N · · NE · · E · · SE · · S · · SO'
-  },
-  nl: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'Richt de camera op de bergen en ontdek naam, hoogte en afstand in augmented reality.',
-    start:'▶ STARTEN', perms:'Vereist: 📍 GPS &nbsp; 📷 Camera &nbsp; 🧭 Kompas',
-    safari:'⚠️ Gebruik Safari op iPhone',
-    gps:'GPS: —', dir:'Richt: —', peaks:'Toppen: —',
-    loadingPeaks:'🗺️ Zoeken naar toppen binnen 20km...',
-    camera:'📷 Camera starten...', gpsAcq:'📍 GPS ophalen...',
-    compassOk:'🧭 Kompas actief', compassNo:'🧭 Kompas niet beschikbaar – gebruik ◀ ▶',
-    found:'✅ {n} toppen gevonden binnen 20km', noPeaks:'⚠️ Geen toppen > 200m binnen 20km',
-    offline:'⚠️ Offline – {n} toppen uit lokale DB',
-    altitude:'Hoogte', distance:'Afstand', country:'Land', azimuth:'Azimut',
-    unnamed:'Naamloze top', demo:'Demo (Milaan)',
-    directions:['N','NNO','NO','ONO','O','OZO','ZO','ZZO','Z','ZZW','ZW','WZW','W','WNW','NW','NNW'],
-    compass:'N · · NO · · O · · ZO · · Z · · ZW · · W · · NW · · N · · NO · · O · · ZO · · Z · · ZW'
-  },
-  pl: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'Skieruj aparat na góry i odkryj ich nazwę, wysokość i odległość w rozszerzonej rzeczywistości.',
-    start:'▶ URUCHOM', perms:'Wymaga: 📍 GPS &nbsp; 📷 Aparat &nbsp; 🧭 Kompas',
-    safari:'⚠️ Użyj Safari na iPhone',
-    gps:'GPS: —', dir:'Kier: —', peaks:'Szczyty: —',
-    loadingPeaks:'🗺️ Szukam szczytów w 20km...',
-    camera:'📷 Uruchamianie aparatu...', gpsAcq:'📍 Pobieranie GPS...',
-    compassOk:'🧭 Kompas aktywny', compassNo:'🧭 Kompas niedostępny – użyj ◀ ▶',
-    found:'✅ Znaleziono {n} szczytów w 20km', noPeaks:'⚠️ Brak szczytów > 200m w 20km',
-    offline:'⚠️ Offline – {n} szczytów z lokalnej bazy',
-    altitude:'Wysokość', distance:'Odległość', country:'Kraj', azimuth:'Azymut',
-    unnamed:'Szczyt bez nazwy', demo:'Demo (Mediolan)',
-    directions:['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'],
-    compass:'N · · NE · · E · · SE · · S · · SW · · W · · NW · · N · · NE · · E · · SE · · S · · SW'
-  },
-  ro: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'Îndreptați camera spre munți și descoperiți numele, altitudinea și distanța în realitate augmentată.',
-    start:'▶ PORNIRE', perms:'Necesită: 📍 GPS &nbsp; 📷 Cameră &nbsp; 🧭 Busolă',
-    safari:'⚠️ Folosiți Safari pe iPhone',
-    gps:'GPS: —', dir:'Dir: —', peaks:'Vârfuri: —',
-    loadingPeaks:'🗺️ Caut vârfuri în 20km...',
-    camera:'📷 Pornire cameră...', gpsAcq:'📍 Obținere GPS...',
-    compassOk:'🧭 Busolă activă', compassNo:'🧭 Busolă indisponibilă – folosiți ◀ ▶',
-    found:'✅ {n} vârfuri găsite în 20km', noPeaks:'⚠️ Niciun vârf > 200m în 20km',
-    offline:'⚠️ Offline – {n} vârfuri din baza locală',
-    altitude:'Altitudine', distance:'Distanță', country:'Țară', azimuth:'Azimut',
-    unnamed:'Vârf fără nume', demo:'Demo (Milano)',
-    directions:['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSV','SV','VSV','V','VNV','NV','NNV'],
-    compass:'N · · NE · · E · · SE · · S · · SV · · V · · NV · · N · · NE · · E · · SE · · S · · SV'
-  },
-  cs: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'Namiřte fotoaparát na hory a zjistěte jejich název, výšku a vzdálenost v rozšířené realitě.',
-    start:'▶ SPUSTIT', perms:'Vyžaduje: 📍 GPS &nbsp; 📷 Kamera &nbsp; 🧭 Kompas',
-    safari:'⚠️ Na iPhone použijte Safari',
-    gps:'GPS: —', dir:'Směr: —', peaks:'Vrcholy: —',
-    loadingPeaks:'🗺️ Hledám vrcholy do 20km...',
-    camera:'📷 Spouštění kamery...', gpsAcq:'📍 Získávání GPS...',
-    compassOk:'🧭 Kompas aktivní', compassNo:'🧭 Kompas nedostupný – použijte ◀ ▶',
-    found:'✅ Nalezeno {n} vrcholů do 20km', noPeaks:'⚠️ Žádný vrchol > 200m do 20km',
-    offline:'⚠️ Offline – {n} vrcholů z místní DB',
-    altitude:'Nadmořská výška', distance:'Vzdálenost', country:'Země', azimuth:'Azimut',
-    unnamed:'Vrchol bez názvu', demo:'Demo (Milán)',
-    directions:['S','SSV','SV','VSV','V','VJV','JV','JJV','J','JJZ','JZ','ZJZ','Z','ZSZ','SZ','SSZ'],
-    compass:'S · · SV · · V · · JV · · J · · JZ · · Z · · SZ · · S · · SV · · V · · JV · · J · · JZ'
-  },
-  hu: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'Irányítsa a kamerát a hegyekre, és fedezze fel nevüket, magasságukat és távolságukat kiterjesztett valóságban.',
-    start:'▶ INDÍTÁS', perms:'Szükséges: 📍 GPS &nbsp; 📷 Kamera &nbsp; 🧭 Iránytű',
-    safari:'⚠️ iPhone-on használja a Safarit',
-    gps:'GPS: —', dir:'Irány: —', peaks:'Csúcsok: —',
-    loadingPeaks:'🗺️ Csúcsok keresése 20km-en belül...',
-    camera:'📷 Kamera indítása...', gpsAcq:'📍 GPS lekérése...',
-    compassOk:'🧭 Iránytű aktív', compassNo:'🧭 Iránytű nem elérhető – használja ◀ ▶',
-    found:'✅ {n} csúcs található 20km-en belül', noPeaks:'⚠️ Nincs 200m-nél magasabb csúcs 20km-en belül',
-    offline:'⚠️ Offline – {n} csúcs a helyi adatbázisból',
-    altitude:'Magasság', distance:'Távolság', country:'Ország', azimuth:'Azimut',
-    unnamed:'Névtelen csúcs', demo:'Demo (Milánó)',
-    directions:['É','ÉÉK','ÉK','KÉK','K','KDK','DK','DDK','D','DDNy','DNy','NyDNy','Ny','NyÉNy','ÉNy','ÉÉNy'],
-    compass:'É · · ÉK · · K · · DK · · D · · DNy · · Ny · · ÉNy · · É · · ÉK · · K · · DK · · D'
-  },
-  sv: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'Rikta kameran mot bergen och upptäck namn, höjd och avstånd i augmented reality.',
-    start:'▶ STARTA', perms:'Kräver: 📍 GPS &nbsp; 📷 Kamera &nbsp; 🧭 Kompass',
-    safari:'⚠️ Använd Safari på iPhone',
-    gps:'GPS: —', dir:'Rikt: —', peaks:'Toppar: —',
-    loadingPeaks:'🗺️ Söker toppar inom 20km...',
-    camera:'📷 Startar kamera...', gpsAcq:'📍 Hämtar GPS...',
-    compassOk:'🧭 Kompass aktiv', compassNo:'🧭 Kompass otillgänglig – använd ◀ ▶',
-    found:'✅ {n} toppar hittades inom 20km', noPeaks:'⚠️ Inga toppar > 200m inom 20km',
-    offline:'⚠️ Offline – {n} toppar från lokal DB',
-    altitude:'Höjd', distance:'Avstånd', country:'Land', azimuth:'Azimut',
-    unnamed:'Namnlös topp', demo:'Demo (Milano)',
-    directions:['N','NNO','NO','ONO','O','OSO','SO','SSO','S','SSV','SV','VSV','V','VNV','NV','NNV'],
-    compass:'N · · NO · · O · · SO · · S · · SV · · V · · NV · · N · · NO · · O · · SO · · S · · SV'
-  },
-  da: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'Ret kameraet mod bjergene og oplev navn, højde og afstand i augmented reality.',
-    start:'▶ START', perms:'Kræver: 📍 GPS &nbsp; 📷 Kamera &nbsp; 🧭 Kompas',
-    safari:'⚠️ Brug Safari på iPhone',
-    gps:'GPS: —', dir:'Retn: —', peaks:'Toppe: —',
-    loadingPeaks:'🗺️ Søger toppe inden for 20km...',
-    camera:'📷 Starter kamera...', gpsAcq:'📍 Henter GPS...',
-    compassOk:'🧭 Kompas aktivt', compassNo:'🧭 Kompas utilgængeligt – brug ◀ ▶',
-    found:'✅ {n} toppe fundet inden for 20km', noPeaks:'⚠️ Ingen toppe > 200m inden for 20km',
-    offline:'⚠️ Offline – {n} toppe fra lokal DB',
-    altitude:'Højde', distance:'Afstand', country:'Land', azimuth:'Azimut',
-    unnamed:'Unavngivet top', demo:'Demo (Milano)',
-    directions:['N','NNØ','NØ','ØNØ','Ø','ØSØ','SØ','SSØ','S','SSV','SV','VSV','V','VNV','NV','NNV'],
-    compass:'N · · NØ · · Ø · · SØ · · S · · SV · · V · · NV · · N · · NØ · · Ø · · SØ · · S · · SV'
-  },
-  fi: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'Suuntaa kamera vuorille ja löydä nimi, korkeus ja etäisyys lisätyssä todellisuudessa.',
-    start:'▶ KÄYNNISTÄ', perms:'Vaatii: 📍 GPS &nbsp; 📷 Kamera &nbsp; 🧭 Kompassi',
-    safari:'⚠️ Käytä Safaria iPhonessa',
-    gps:'GPS: —', dir:'Suunta: —', peaks:'Huiput: —',
-    loadingPeaks:'🗺️ Etsitään huippuja 20km säteellä...',
-    camera:'📷 Käynnistetään kamera...', gpsAcq:'📍 Haetaan GPS...',
-    compassOk:'🧭 Kompassi aktiivinen', compassNo:'🧭 Kompassi ei käytettävissä – käytä ◀ ▶',
-    found:'✅ {n} huippua löytyi 20km säteellä', noPeaks:'⚠️ Ei huippuja > 200m 20km säteellä',
-    offline:'⚠️ Offline – {n} huippua paikallisesta tietokannasta',
-    altitude:'Korkeus', distance:'Etäisyys', country:'Maa', azimuth:'Atsimutti',
-    unnamed:'Nimetön huippu', demo:'Demo (Milano)',
-    directions:['P','PPK','PK','KPK','I','KKE','KE','EKE','E','EEL','EL','LEL','L','LPL','PL','PPL'],
-    compass:'P · · PK · · I · · KE · · E · · EL · · L · · PL · · P · · PK · · I · · KE · · E · · EL'
-  },
-  el: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'Στρέψτε την κάμερα στα βουνά και ανακαλύψτε όνομα, ύψος και απόσταση σε επαυξημένη πραγματικότητα.',
-    start:'▶ ΕΚΚΙΝΗΣΗ', perms:'Απαιτεί: 📍 GPS &nbsp; 📷 Κάμερα &nbsp; 🧭 Πυξίδα',
-    safari:'⚠️ Χρησιμοποιήστε Safari στο iPhone',
-    gps:'GPS: —', dir:'Κατεύθ: —', peaks:'Κορυφές: —',
-    loadingPeaks:'🗺️ Αναζήτηση κορυφών σε 20km...',
-    camera:'📷 Εκκίνηση κάμερας...', gpsAcq:'📍 Λήψη GPS...',
-    compassOk:'🧭 Πυξίδα ενεργή', compassNo:'🧭 Πυξίδα μη διαθέσιμη – χρησιμοποιήστε ◀ ▶',
-    found:'✅ {n} κορυφές βρέθηκαν σε 20km', noPeaks:'⚠️ Καμία κορυφή > 200m σε 20km',
-    offline:'⚠️ Εκτός σύνδεσης – {n} κορυφές από τοπική βάση',
-    altitude:'Υψόμετρο', distance:'Απόσταση', country:'Χώρα', azimuth:'Αζιμούθιο',
-    unnamed:'Ανώνυμη κορυφή', demo:'Επίδειξη (Μιλάνο)',
-    directions:['Β','ΒΒΑ','ΒΑ','ΑΒΑ','Α','ΑΝΑ','ΝΑ','ΝΝΑ','Ν','ΝΝΔ','ΝΔ','ΔΝΔ','Δ','ΔΒΔ','ΒΔ','ΒΒΔ'],
-    compass:'Β · · ΒΑ · · Α · · ΝΑ · · Ν · · ΝΔ · · Δ · · ΒΔ · · Β · · ΒΑ · · Α · · ΝΑ · · Ν · · ΝΔ'
-  },
-  sk: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'Namierte fotoaparát na hory a zistite ich názov, výšku a vzdialenosť v rozšírenej realite.',
-    start:'▶ SPUSTIŤ', perms:'Vyžaduje: 📍 GPS &nbsp; 📷 Kamera &nbsp; 🧭 Kompas',
-    safari:'⚠️ Na iPhone použite Safari',
-    gps:'GPS: —', dir:'Smer: —', peaks:'Vrcholy: —',
-    loadingPeaks:'🗺️ Hľadám vrcholy do 20km...',
-    camera:'📷 Spúšťanie kamery...', gpsAcq:'📍 Získavanie GPS...',
-    compassOk:'🧭 Kompas aktívny', compassNo:'🧭 Kompas nedostupný – použite ◀ ▶',
-    found:'✅ Nájdených {n} vrcholov do 20km', noPeaks:'⚠️ Žiadny vrchol > 200m do 20km',
-    offline:'⚠️ Offline – {n} vrcholov z miestnej DB',
-    altitude:'Nadmorská výška', distance:'Vzdialenosť', country:'Krajina', azimuth:'Azimut',
-    unnamed:'Vrchol bez názvu', demo:'Demo (Miláno)',
-    directions:['S','SSV','SV','VSV','V','VJV','JV','JJV','J','JJZ','JZ','ZJZ','Z','ZSZ','SZ','SSZ'],
-    compass:'S · · SV · · V · · JV · · J · · JZ · · Z · · SZ · · S · · SV · · V · · JV · · J · · JZ'
-  },
-  sl: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'Usmerite kamero proti goram in odkrijte ime, višino in razdaljo v razširjeni resničnosti.',
-    start:'▶ ZAŽENI', perms:'Zahteva: 📍 GPS &nbsp; 📷 Kamera &nbsp; 🧭 Kompas',
-    safari:'⚠️ Na iPhonu uporabite Safari',
-    gps:'GPS: —', dir:'Smer: —', peaks:'Vrhovi: —',
-    loadingPeaks:'🗺️ Iščem vrhove v 20km...',
-    camera:'📷 Zaganjanje kamere...', gpsAcq:'📍 Pridobivanje GPS...',
-    compassOk:'🧭 Kompas aktiven', compassNo:'🧭 Kompas ni na voljo – uporabite ◀ ▶',
-    found:'✅ {n} vrhov najdenih v 20km', noPeaks:'⚠️ Ni vrhov > 200m v 20km',
-    offline:'⚠️ Brez povezave – {n} vrhov iz lokalne baze',
-    altitude:'Nadmorska višina', distance:'Razdalja', country:'Država', azimuth:'Azimut',
-    unnamed:'Neimenovan vrh', demo:'Demo (Milano)',
-    directions:['S','SSV','SV','VSV','V','VJV','JV','JJV','J','JJZ','JZ','ZJZ','Z','ZSZ','SZ','SSZ'],
-    compass:'S · · SV · · V · · JV · · J · · JZ · · Z · · SZ · · S · · SV · · V · · JV · · J · · JZ'
-  },
-  hr: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'Usmjerite kameru prema planinama i otkrijte naziv, visinu i udaljenost u proširenoj stvarnosti.',
-    start:'▶ POKRENI', perms:'Zahtijeva: 📍 GPS &nbsp; 📷 Kamera &nbsp; 🧭 Kompas',
-    safari:'⚠️ Na iPhoneu koristite Safari',
-    gps:'GPS: —', dir:'Smjer: —', peaks:'Vrhovi: —',
-    loadingPeaks:'🗺️ Tražim vrhove u 20km...',
-    camera:'📷 Pokretanje kamere...', gpsAcq:'📍 Dohvaćanje GPS-a...',
-    compassOk:'🧭 Kompas aktivan', compassNo:'🧭 Kompas nedostupan – koristite ◀ ▶',
-    found:'✅ {n} vrhova pronađeno u 20km', noPeaks:'⚠️ Nema vrhova > 200m u 20km',
-    offline:'⚠️ Offline – {n} vrhova iz lokalne baze',
-    altitude:'Nadmorska visina', distance:'Udaljenost', country:'Zemlja', azimuth:'Azimut',
-    unnamed:'Vrh bez naziva', demo:'Demo (Milano)',
-    directions:['S','SSI','SI','ISI','I','IJI','JI','JJI','J','JJZ','JZ','ZJZ','Z','ZSZ','SZ','SSZ'],
-    compass:'S · · SI · · I · · JI · · J · · JZ · · Z · · SZ · · S · · SI · · I · · JI · · J · · JZ'
-  },
-  bg: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'Насочете камерата към планините и открийте имена, височина и разстояние в добавена реалност.',
-    start:'▶ СТАРТ', perms:'Изисква: 📍 GPS &nbsp; 📷 Камера &nbsp; 🧭 Компас',
-    safari:'⚠️ Използвайте Safari на iPhone',
-    gps:'GPS: —', dir:'Посока: —', peaks:'Върхове: —',
-    loadingPeaks:'🗺️ Търсене на върхове в 20км...',
-    camera:'📷 Стартиране на камера...', gpsAcq:'📍 Получаване на GPS...',
-    compassOk:'🧭 Компасът е активен', compassNo:'🧭 Компасът не е наличен – използвайте ◀ ▶',
-    found:'✅ {n} върха намерени в 20км', noPeaks:'⚠️ Няма върхове > 200м в 20км',
-    offline:'⚠️ Офлайн – {n} върха от локална БД',
-    altitude:'Височина', distance:'Разстояние', country:'Държава', azimuth:'Азимут',
-    unnamed:'Безименен връх', demo:'Демо (Милано)',
-    directions:['С','ССИ','СИ','ИСИ','И','ИЮИ','ЮИ','ЮЮИ','Ю','ЮЮЗ','ЮЗ','ЗЮЗ','З','ЗСЗ','СЗ','ССЗ'],
-    compass:'С · · СИ · · И · · ЮИ · · Ю · · ЮЗ · · З · · СЗ · · С · · СИ · · И · · ЮИ · · Ю · · ЮЗ'
-  },
-  et: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'Suuna kaamera mägede poole ja avasta nende nimi, kõrgus ja kaugus liitreaalsuses.',
-    start:'▶ KÄIVITA', perms:'Nõuab: 📍 GPS &nbsp; 📷 Kaamera &nbsp; 🧭 Kompass',
-    safari:'⚠️ Kasuta iPhones Safarit',
-    gps:'GPS: —', dir:'Suund: —', peaks:'Tipud: —',
-    loadingPeaks:'🗺️ Otsin tippe 20km raadiuses...',
-    camera:'📷 Kaamera käivitamine...', gpsAcq:'📍 GPS hankimine...',
-    compassOk:'🧭 Kompass aktiivne', compassNo:'🧭 Kompass pole saadaval – kasuta ◀ ▶',
-    found:'✅ {n} tippu leitud 20km raadiuses', noPeaks:'⚠️ Tippe > 200m pole 20km raadiuses',
-    offline:'⚠️ Võrguühenduseta – {n} tippu kohalikust andmebaasist',
-    altitude:'Kõrgus', distance:'Kaugus', country:'Riik', azimuth:'Asimuut',
-    unnamed:'Nimetu tipp', demo:'Demo (Milano)',
-    directions:['P','PPK','PK','KPK','I','KLK','LK','LLK','L','LLL','LL','LLL','Lä','LäPLä','PLä','PPLä'],
-    compass:'P · · PK · · I · · LK · · L · · LL · · Lä · · PLä · · P · · PK · · I · · LK · · L · · LL'
-  },
-  lv: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'Vērst kameru pret kalniem un atklāt to nosaukumu, augstumu un attālumu papildinātajā realitātē.',
-    start:'▶ SĀKT', perms:'Nepieciešams: 📍 GPS &nbsp; 📷 Kamera &nbsp; 🧭 Kompass',
-    safari:'⚠️ iPhone izmantojiet Safari',
-    gps:'GPS: —', dir:'Virziens: —', peaks:'Virsotnes: —',
-    loadingPeaks:'🗺️ Meklē virsotnes 20km rādiusā...',
-    camera:'📷 Kameras palaišana...', gpsAcq:'📍 GPS iegūšana...',
-    compassOk:'🧭 Kompass aktīvs', compassNo:'🧭 Kompass nav pieejams – izmantojiet ◀ ▶',
-    found:'✅ {n} virsotnes atrastas 20km rādiusā', noPeaks:'⚠️ Nav virsotņu > 200m 20km rādiusā',
-    offline:'⚠️ Bezsaiste – {n} virsotnes no lokālās datu bāzes',
-    altitude:'Augstums', distance:'Attālums', country:'Valsts', azimuth:'Azimuts',
-    unnamed:'Nenosaukta virsotne', demo:'Demo (Milāna)',
-    directions:['Z','ZZA','ZA','AZA','A','ADА','DA','DDA','D','DDR','DR','RDR','R','RZR','ZR','ZZR'],
-    compass:'Z · · ZA · · A · · DA · · D · · DR · · R · · ZR · · Z · · ZA · · A · · DA · · D · · DR'
-  },
-  lt: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'Nukreipkite kamerą į kalnus ir sužinokite pavadinimą, aukštį ir atstumą papildytoje realybėje.',
-    start:'▶ PALEISTI', perms:'Reikia: 📍 GPS &nbsp; 📷 Kamera &nbsp; 🧭 Kompasas',
-    safari:'⚠️ iPhone naudokite Safari',
-    gps:'GPS: —', dir:'Kryptis: —', peaks:'Viršūnės: —',
-    loadingPeaks:'🗺️ Ieškoma viršūnių 20km spinduliu...',
-    camera:'📷 Kameros paleidimas...', gpsAcq:'📍 GPS gavimas...',
-    compassOk:'🧭 Kompasas aktyvus', compassNo:'🧭 Kompasas nepasiekiamas – naudokite ◀ ▶',
-    found:'✅ Rasta {n} viršūnių 20km spinduliu', noPeaks:'⚠️ Nėra viršūnių > 200m 20km spinduliu',
-    offline:'⚠️ Neprisijungęs – {n} viršūnės iš vietinės DB',
-    altitude:'Aukštis', distance:'Atstumas', country:'Šalis', azimuth:'Azimutas',
-    unnamed:'Bevardė viršūnė', demo:'Demo (Milanas)',
-    directions:['Š','ŠŠR','ŠR','RŠR','R','RPR','PR','PPR','P','PPV','PV','VPV','V','VŠV','ŠV','ŠŠV'],
-    compass:'Š · · ŠR · · R · · PR · · P · · PV · · V · · ŠV · · Š · · ŠR · · R · · PR · · P · · PV'
-  },
-  mt: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'Ippunta l-kamera lejn il-muntanji u skopri l-isem, l-għoli u d-distanza f\'realtà awmentata.',
-    start:'▶ IBDA', perms:'Jeħtieġ: 📍 GPS &nbsp; 📷 Kamera &nbsp; 🧭 Bussola',
-    safari:'⚠️ Uża Safari fuq iPhone',
-    gps:'GPS: —', dir:'Dir: —', peaks:'Quċċati: —',
-    loadingPeaks:'🗺️ Qed infittex quċċati fi 20km...',
-    camera:'📷 Qed tibda l-kamera...', gpsAcq:'📍 Qed tikseb GPS...',
-    compassOk:'🧭 Bussola attiva', compassNo:'🧭 Bussola mhix disponibbli – uża ◀ ▶',
-    found:'✅ {n} quċċati misjuba fi 20km', noPeaks:'⚠️ L-ebda quċċata > 200m fi 20km',
-    offline:'⚠️ Offline – {n} quċċati mid-DB lokali',
-    altitude:'Altitudni', distance:'Distanza', country:'Pajjiż', azimuth:'Ażimut',
-    unnamed:'Quċċata bla isem', demo:'Demo (Milan)',
-    directions:['T','TTL','TL','LTL','L','LNL','NL','NNL','N','NNP','NP','PNP','P','PTP','TP','TTP'],
-    compass:'T · · TL · · L · · NL · · N · · NP · · P · · TP · · T · · TL · · L · · NL · · N · · NP'
-  },
-  // ── Turco ────────────────────────────────────────────────────────────────
-  tr: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'Kamerayı dağlara doğrulayın ve artırılmış gerçeklikte adı, yüksekliği ve mesafeyi keşfedin.',
-    start:'▶ BAŞLAT', perms:'Gerektirir: 📍 GPS &nbsp; 📷 Kamera &nbsp; 🧭 Pusula',
-    safari:'⚠️ iPhone\'da Safari kullanın',
-    gps:'GPS: —', dir:'Yön: —', peaks:'Zirveler: —',
-    loadingPeaks:'🗺️ 20km içinde zirveler aranıyor...',
-    camera:'📷 Kamera başlatılıyor...', gpsAcq:'📍 GPS alınıyor...',
-    compassOk:'🧭 Pusula aktif', compassNo:'🧭 Pusula kullanılamıyor – ◀ ▶ kullanın',
-    found:'✅ 20km içinde {n} zirve bulundu', noPeaks:'⚠️ 20km içinde 200m üzerinde zirve yok',
-    offline:'⚠️ Çevrimdışı – yerel veritabanından {n} zirve',
-    altitude:'Yükseklik', distance:'Mesafe', country:'Ülke', azimuth:'Azimut',
-    unnamed:'İsimsiz zirve', demo:'Demo (Milano)',
-    directions:['K','KKD','KD','DKD','D','DGD','GD','GGD','G','GGB','GB','BGB','B','BKB','KB','KKB'],
-    compass:'K · · KD · · D · · GD · · G · · GB · · B · · KB · · K · · KD · · D · · GD · · G · · GB'
-  },
-  // ── Arabo (RTL) ──────────────────────────────────────────────────────────
-  ar: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'وجّه الكاميرا نحو الجبال واكتشف الاسم والارتفاع والمسافة في الواقع المعزز.',
-    start:'▶ ابدأ', perms:'يتطلب: 📍 GPS &nbsp; 📷 كاميرا &nbsp; 🧭 بوصلة',
-    safari:'⚠️ استخدم Safari على iPhone',
-    gps:'GPS: —', dir:'الاتجاه: —', peaks:'القمم: —',
-    loadingPeaks:'🗺️ البحث عن القمم في نطاق 20كم...',
-    camera:'📷 تشغيل الكاميرا...', gpsAcq:'📍 الحصول على GPS...',
-    compassOk:'🧭 البوصلة نشطة', compassNo:'🧭 البوصلة غير متاحة – استخدم ◀ ▶',
-    found:'✅ تم العثور على {n} قمة في نطاق 20كم', noPeaks:'⚠️ لا توجد قمم > 200م في نطاق 20كم',
-    offline:'⚠️ غير متصل – {n} قمة من قاعدة البيانات المحلية',
-    altitude:'الارتفاع', distance:'المسافة', country:'البلد', azimuth:'السمت',
-    unnamed:'قمة بلا اسم', demo:'عرض توضيحي (ميلانو)',
-    directions:['ش','شش.ش','شش','شش.ش','ش','شج.ش','جش','جج.ش','ج','جج.غ','جغ','غج.غ','غ','غش.غ','شغ','شش.غ'],
-    compass:'ش · · شش · · ش · · جش · · ج · · جغ · · غ · · شغ · · ش · · شش · · ش · · جش · · ج · · جغ',
-    rtl: true
-  },
-  ja: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'カメラを山に向けると、名前・標高・距離がAR表示されます。',
-    start:'▶ 起動',
-    perms:'必要: 📍 GPS &nbsp; 📷 カメラ &nbsp; 🧭 コンパス',
-    safari:'⚠️ iPhoneはSafariをご使用ください',
-    gps:'GPS: —', dir:'方位: —', peaks:'山頂: —',
-    loadingPeaks:'🗺️ 20km以内の山頂を検索中...',
-    camera:'📷 カメラ起動中...', gpsAcq:'📍 GPS取得中...',
-    compassOk:'🧭 コンパス有効', compassNo:'🧭 コンパス無効 – ◀ ▶ を使用',
-    found:'✅ 20km以内に{n}山頂を発見', noPeaks:'⚠️ 20km以内に200m超の山頂なし',
-    offline:'⚠️ オフライン – ローカルDBから{n}山頂',
-    altitude:'標高', distance:'距離', country:'国', azimuth:'方位角',
-    unnamed:'名称不明の山頂', demo:'デモ (ミラノ)',
-    directions:['北','北北東','北東','東北東','東','東南東','南東','南南東','南','南南西','南西','西南西','西','西北西','北西','北北西'],
-    compass:'北 · · 北東 · · 東 · · 南東 · · 南 · · 南西 · · 西 · · 北西 · · 北 · · 北東 · · 東'
-  },
-  zh: {
-    title:'MOUNTAIN<span style="color:#38bdf8">AR</span>',
-    subtitle:'将相机对准山峰，以增强现实方式显示名称、海拔和距离。',
-    start:'▶ 启动',
-    perms:'需要: 📍 GPS &nbsp; 📷 相机 &nbsp; 🧭 指南针',
-    safari:'⚠️ iPhone请使用Safari浏览器',
-    gps:'GPS: —', dir:'方向: —', peaks:'山峰: —',
-    loadingPeaks:'🗺️ 搜索20公里内山峰...',
-    camera:'📷 启动相机...', gpsAcq:'📍 获取GPS...',
-    compassOk:'🧭 指南针已激活', compassNo:'🧭 指南针不可用 – 使用 ◀ ▶',
-    found:'✅ 20公里内找到{n}座山峰', noPeaks:'⚠️ 20公里内无200m以上山峰',
-    offline:'⚠️ 离线 – 本地数据库{n}座山峰',
-    altitude:'海拔', distance:'距离', country:'国家', azimuth:'方位角',
-    unnamed:'无名山峰', demo:'演示 (米兰)',
-    directions:['北','北北东','北东','东北东','东','东南东','南东','南南东','南','南南西','南西','西南西','西','西北西','北西','北北西'],
-    compass:'北 · · 东北 · · 东 · · 东南 · · 南 · · 西南 · · 西 · · 西北 · · 北 · · 东北 · · 东'
-  }
-};
-// Fallback inglese per lingue non supportate
-var i18n = T[LANG] || T['en'];
-// RTL per arabo
-if(i18n.rtl){ document.documentElement.setAttribute('dir','rtl'); }
-
-// ── DB LOCALE — solo usato se Overpass fallisce completamente ─────────────
+// ── DB LOCALE (fallback) ──────────────────────────────────────────────────
 var DB = [
-  {n:"Monte Bianco",a:4808,lat:45.8326,lon:6.8652,c:"IT/FR",ch:"Alpi Occ."},
-  {n:"Monte Rosa",a:4634,lat:45.9372,lon:7.8672,c:"IT/CH",ch:"Alpi Pennine"},
-  {n:"Cervino",a:4478,lat:45.9766,lon:7.6583,c:"IT/CH",ch:"Alpi Pennine"},
-  {n:"Gran Paradiso",a:4061,lat:45.517,lon:7.2402,c:"IT",ch:"Alpi Graie"},
-  {n:"Pizzo Bernina",a:4049,lat:46.3806,lon:9.909,c:"IT/CH",ch:"Alpi Retiche"},
-  {n:"Ortles",a:3905,lat:46.5078,lon:10.5433,c:"IT",ch:"Alpi Retiche"},
-  {n:"Marmolada",a:3343,lat:46.4386,lon:11.8598,c:"IT",ch:"Dolomiti"},
-  {n:"Etna",a:3357,lat:37.751,lon:15.006,c:"IT",ch:"Sicilia"},
-  {n:"Gran Sasso",a:2912,lat:42.4644,lon:13.5664,c:"IT",ch:"Appennino"},
-  {n:"Adamello",a:3554,lat:46.1478,lon:10.5044,c:"IT",ch:"Alpi Retiche"},
-  {n:"Tre Cime Lavaredo",a:2999,lat:46.6175,lon:12.3025,c:"IT",ch:"Dolomiti"},
-  {n:"Monte Disgrazia",a:3678,lat:46.2547,lon:9.7275,c:"IT",ch:"Alpi Retiche"},
-  {n:"Monte Baldo",a:2218,lat:45.737,lon:10.861,c:"IT",ch:"Prealpi"},
-  {n:"Monte Grappa",a:1775,lat:45.862,lon:11.785,c:"IT",ch:"Prealpi Venete"},
-  {n:"Cima Presanella",a:3558,lat:46.226,lon:10.631,c:"IT",ch:"Alpi Retiche"},
+  {n:"Monte Bianco",a:4808,lat:45.8326,lon:6.8652,c:"Italia/Francia",ch:"Alpi Occ."},
+  {n:"Monte Rosa",a:4634,lat:45.9372,lon:7.8672,c:"Italia/Svizzera",ch:"Alpi Pennine"},
+  {n:"Cervino",a:4478,lat:45.9766,lon:7.6583,c:"Italia/Svizzera",ch:"Alpi Pennine"},
+  {n:"Gran Paradiso",a:4061,lat:45.517,lon:7.2402,c:"Italia",ch:"Alpi Graie"},
+  {n:"Pizzo Bernina",a:4049,lat:46.3806,lon:9.909,c:"Italia/Svizzera",ch:"Alpi Retiche"},
+  {n:"Ortles",a:3905,lat:46.5078,lon:10.5433,c:"Italia",ch:"Alpi Retiche"},
+  {n:"Grossglockner",a:3798,lat:47.0742,lon:12.6944,c:"Austria",ch:"Alpi Orient."},
+  {n:"Marmolada",a:3343,lat:46.4386,lon:11.8598,c:"Italia",ch:"Dolomiti"},
+  {n:"Etna",a:3357,lat:37.751,lon:15.006,c:"Italia",ch:"Sicilia"},
+  {n:"Gran Sasso",a:2912,lat:42.4644,lon:13.5664,c:"Italia",ch:"Appennino"},
+  {n:"Zugspitze",a:2962,lat:47.4211,lon:10.9847,c:"Germania/Austria",ch:"Alpi Bavar."},
+  {n:"Jungfrau",a:4158,lat:46.5374,lon:7.9619,c:"Svizzera",ch:"Alpi Bernesi"},
+  {n:"Eiger",a:3967,lat:46.5775,lon:8.0054,c:"Svizzera",ch:"Alpi Bernesi"},
+  {n:"Tre Cime Lavaredo",a:2999,lat:46.6175,lon:12.3025,c:"Italia",ch:"Dolomiti"},
+  {n:"Adamello",a:3554,lat:46.1478,lon:10.5044,c:"Italia",ch:"Alpi Retiche"},
+  {n:"Sassolungo",a:3181,lat:46.5292,lon:11.7503,c:"Italia",ch:"Dolomiti"},
+  {n:"Monte Disgrazia",a:3678,lat:46.2547,lon:9.7275,c:"Italia",ch:"Alpi Retiche"},
+  {n:"Pizzo Badile",a:3308,lat:46.3083,lon:9.6019,c:"Italia/Svizzera",ch:"Alpi Retiche"},
+  {n:"Catinaccio",a:2981,lat:46.4856,lon:11.6208,c:"Italia",ch:"Dolomiti"},
+  {n:"Civetta",a:3220,lat:46.3786,lon:12.0525,c:"Italia",ch:"Dolomiti"},
+  {n:"Monte Baldo",a:2218,lat:45.737,lon:10.861,c:"Italia",ch:"Prealpi"},
+  {n:"Monte Grappa",a:1775,lat:45.862,lon:11.785,c:"Italia",ch:"Prealpi Venete"},
+  {n:"Cima Presanella",a:3558,lat:46.226,lon:10.631,c:"Italia",ch:"Alpi Retiche"},
 ];
 
-// ── APPLICA LINGUA ALL'AVVIO ──────────────────────────────────────────────
-function applyI18n(){
-  document.getElementById('appTitle').innerHTML = i18n.title;
-  document.getElementById('appSubtitle').textContent = i18n.subtitle;
-  document.getElementById('startBtn').textContent = i18n.start;
-  document.getElementById('appPerms').innerHTML = i18n.perms;
-  document.getElementById('appSafari').textContent = i18n.safari;
-  document.getElementById('iGps').textContent = i18n.gps;
-  document.getElementById('iHead').textContent = i18n.dir;
-  document.getElementById('iCount').textContent = i18n.peaks;
-  document.getElementById('compassLine').textContent = i18n.compass;
-  document.getElementById('lAlt').textContent = i18n.altitude;
-  document.getElementById('lDist').textContent = i18n.distance;
-  document.getElementById('lCountry').textContent = i18n.country;
-  document.getElementById('lAz').textContent = i18n.azimuth;
-}
-applyI18n();
+// ── MATH ──────────────────────────────────────────────────────────────────
 function bearing(la1,lo1,la2,lo2){
   var f1=la1*Math.PI/180,f2=la2*Math.PI/180,dl=(lo2-lo1)*Math.PI/180;
   return ((Math.atan2(Math.sin(dl)*Math.cos(f2),
@@ -651,30 +197,18 @@ function haversine(la1,lo1,la2,lo2){
   return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
 }
 function angDiff(a,b){ var d=((a-b)+360)%360; return d>180?d-360:d; }
-function dirName(h){ return i18n.directions[Math.round(h/22.5)%16]; }
+function dirName(h){ return ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSO','SO','OSO','O','ONO','NO','NNO'][Math.round(h/22.5)%16]; }
 
-function t(key, vars){
-  var s = i18n[key] || key;
-  if(vars) Object.keys(vars).forEach(function(k){ s = s.replace('{'+k+'}', vars[k]); });
-  return s;
-}
-
-// ── AVVIA — tutto sincrono nel tap, come il debug ─────────────────────────
+// ── AVVIA ─────────────────────────────────────────────────────────────────
 function onAvvia(){
-  // 1. Chiedi permesso bussola SUBITO (stesso tap, niente await prima)
   if(typeof DeviceOrientationEvent !== 'undefined' &&
      typeof DeviceOrientationEvent.requestPermission === 'function'){
     DeviceOrientationEvent.requestPermission().then(function(r){
-      if(r === 'granted'){
-        window.addEventListener('deviceorientation', onOrient, true);
-        setStatus(i18n.compassOk);
-      } else {
-        showManual();
-      }
+      if(r === 'granted') window.addEventListener('deviceorientation', onOrient, true);
+      else showManual();
       afterPermission();
     }).catch(function(){ showManual(); afterPermission(); });
   } else {
-    // Android o browser senza requestPermission
     window.addEventListener('deviceorientationabsolute', onOrient, true);
     window.addEventListener('deviceorientation', onOrient, true);
     afterPermission();
@@ -690,90 +224,88 @@ function onOrient(e){
 
 function afterPermission(){
   document.getElementById('start').style.display = 'none';
-  setStatus(i18n.camera);
-  if(navigator.mediaDevices){
+  setStatus('📷 Avvio fotocamera...');
+  if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
     navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false})
-      .then(function(stream){
-        document.getElementById('vid').srcObject = stream;
-        setStatus(i18n.gpsAcq);
-      }).catch(function(){
-        document.getElementById('vid').style.display = 'none';
-        setStatus(i18n.gpsAcq);
-      });
+      .then(function(stream){ document.getElementById('vid').srcObject = stream; })
+      .catch(function(){ document.getElementById('vid').style.display = 'none'; });
   }
-  if(navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(function(p){
-      S.lat = p.coords.latitude;
-      S.lon = p.coords.longitude;
-      document.getElementById('iGps').textContent = S.lat.toFixed(3)+', '+S.lon.toFixed(3);
-      loadPeaks();
-    }, function(err){
-      S.lat = 45.464; S.lon = 9.190;
-      document.getElementById('iGps').textContent = i18n.demo;
-      loadPeaks();
-    }, {enableHighAccuracy: true, timeout: 15000, maximumAge: 0});
-  } else {
-    S.lat = 45.464; S.lon = 9.190;
-    loadPeaks();
-  }
-  // Avvia loop grafica
+  setStatus('📍 GPS in corso...');
+  var done = false;
+  var emergency = setTimeout(function(){
+    if(!done){ done=true; S.lat=45.464; S.lon=9.190;
+      document.getElementById('iGps').textContent='Demo (Milano)';
+      setStatus('⚠️ GPS timeout – abilita in Impostazioni'); loadPeaks(); }
+  }, 10000);
+  try {
+    navigator.geolocation.getCurrentPosition(
+      function(p){
+        if(done) return; done=true; clearTimeout(emergency);
+        S.lat=p.coords.latitude; S.lon=p.coords.longitude;
+        document.getElementById('iGps').textContent=S.lat.toFixed(3)+', '+S.lon.toFixed(3);
+        setStatus('✅ GPS OK – carico cime...');
+        loadPeaks();
+      },
+      function(err){
+        if(done) return; done=true; clearTimeout(emergency);
+        S.lat=45.464; S.lon=9.190;
+        document.getElementById('iGps').textContent='Demo (err:'+err.code+')';
+        loadPeaks();
+      },
+      {enableHighAccuracy:true, timeout:9000, maximumAge:0}
+    );
+  } catch(e){ clearTimeout(emergency); S.lat=45.464; S.lon=9.190; loadPeaks(); }
   requestAnimationFrame(loop);
 }
 
-// ── PEAKS — Overpass mondiale, raggio 20km, tutte le cime ────────────────
+// ── PEAKS ─────────────────────────────────────────────────────────────────
 function loadPeaks(){
-  setStatus(i18n.loadingPeaks);
-  var RADIUS = 20000;
-  var MIN_ELE = 200;
-  // Preferisce il nome nella lingua del dispositivo, poi inglese, poi nome locale
-  var nameLang = 'name:' + LANG;
-  var q = '[out:json][timeout:25];'
-    + 'node["natural"="peak"]["ele"](around:' + RADIUS + ',' + S.lat + ',' + S.lon + ');'
-    + 'out 1000;';
-  var ctrl = new AbortController();
-  setTimeout(function(){ ctrl.abort(); }, 20000);
-  fetch('https://overpass-api.de/api/interpreter?data=' + encodeURIComponent(q), {signal:ctrl.signal})
+  setStatus('🗺️ Caricamento cime...');
+  var fallback = DB.map(function(m){
+    return {n:m.n,a:m.a,lat:m.lat,lon:m.lon,c:m.c,ch:m.ch,
+      dist:haversine(S.lat,S.lon,m.lat,m.lon),
+      az:bearing(S.lat,S.lon,m.lat,m.lon)};
+  }).filter(function(m){ return m.dist<=150; }).sort(function(a,b){ return a.dist-b.dist; });
+  S.mountains = fallback;
+  document.getElementById('iCount').textContent='Cime: '+fallback.length+' (locale)';
+
+  var q='[out:json][timeout:30];node["natural"="peak"]["ele"](around:150000,'+S.lat+','+S.lon+');out 1000;';
+  var ctrl=new AbortController();
+  var timer=setTimeout(function(){ ctrl.abort(); setStatus('⚠️ Timeout – uso DB locale'); },30000);
+
+  fetch('https://overpass-api.de/api/interpreter?data='+encodeURIComponent(q),{signal:ctrl.signal})
     .then(function(r){ return r.json(); })
     .then(function(d){
+      clearTimeout(timer);
+      var lang = (navigator.language||'it').substring(0,2);
       var peaks = d.elements
-        .filter(function(e){ return e.tags && e.tags.ele && parseFloat(e.tags.ele) >= MIN_ELE; })        .map(function(e){
+        .filter(function(e){ return e.tags && e.tags.ele && parseFloat(e.tags.ele)>=200; })
+        .map(function(e){
           return {
-            // Nome nella lingua del dispositivo → inglese → nome locale
-            n: e.tags[nameLang] || e.tags['name:en'] || e.tags.name || i18n.unnamed,
+            n: e.tags['name:'+lang]||e.tags['name:en']||e.tags.name||'Cima senza nome',
             a: Math.round(parseFloat(e.tags.ele)),
-            lat: e.lat, lon: e.lon,
-            c: e.tags['addr:country'] || '',
-            ch: e.tags.mountain_range || e.tags['name:it'] || '',
-            dist: haversine(S.lat, S.lon, e.lat, e.lon),
-            az: bearing(S.lat, S.lon, e.lat, e.lon)
+            lat:e.lat, lon:e.lon,
+            c: e.tags['addr:country']||'',
+            ch: e.tags.mountain_range||'',
+            dist: haversine(S.lat,S.lon,e.lat,e.lon),
+            az: bearing(S.lat,S.lon,e.lat,e.lon)
           };
         })
-        .filter(function(m){ return m.dist <= 150; })
-        .sort(function(a,b){ return a.dist - b.dist; });
-
-      if(peaks.length === 0){
-        setStatus(i18n.noPeaks);
-        S.mountains = [];
-        document.getElementById('iCount').textContent = i18n.peaks;
-        return;
-      }
-      S.mountains = peaks;
-      document.getElementById('iCount').textContent = i18n.peaks.split(':')[0] + ': ' + peaks.length;
-      setStatus(t('found', {n: peaks.length}));
-      setTimeout(function(){ setStatus(''); }, 3000);
-    })
-    .catch(function(e){
-      // Overpass non raggiungibile: fallback DB locale filtrato per distanza
-      var fallback = DB.map(function(m){
-        return {n:m.n,a:m.a,lat:m.lat,lon:m.lon,c:m.c,ch:m.ch,
-          dist:haversine(S.lat,S.lon,m.lat,m.lon),
-          az:bearing(S.lat,S.lon,m.lat,m.lon)};
-      }).filter(function(m){ return m.dist <= 20; })
+        .filter(function(m){ return m.dist<=150; })
         .sort(function(a,b){ return a.dist-b.dist; });
-      S.mountains = fallback;
-      document.getElementById('iCount').textContent = i18n.peaks.split(':')[0] + ': ' + fallback.length;
-      setStatus(t('offline', {n: fallback.length}));
-      setTimeout(function(){ setStatus(''); }, 4000);
+      if(peaks.length>0){
+        S.mountains=peaks;
+        document.getElementById('iCount').textContent='Cime: '+peaks.length;
+        setStatus('✅ '+peaks.length+' cime caricate');
+      } else {
+        setStatus('⚠️ Nessuna cima trovata – uso DB locale');
+      }
+      setTimeout(function(){ setStatus(''); },3000);
+    })
+    .catch(function(){
+      clearTimeout(timer);
+      setStatus('⚠️ Offline – '+fallback.length+' cime dal DB locale');
+      setTimeout(function(){ setStatus(''); },3000);
     });
 }
 
@@ -786,65 +318,82 @@ function loop(){
 }
 
 function renderCompass(){
-  var h = Math.round(S.heading);
-  document.getElementById('compassDeg').textContent = h+'° '+dirName(h);
-  document.getElementById('iHead').textContent = i18n.dir.split(':')[0] + ': ' + h + '° ' + dirName(h);
-  document.getElementById('compassLine').style.transform = 'translateX('+(-(h/360*420))+'px)';
+  var h=Math.round(S.heading);
+  document.getElementById('compassDeg').textContent=h+'° '+dirName(h);
+  document.getElementById('iHead').textContent='Dir: '+h+'°';
+  document.getElementById('compassLine').style.transform='translateX('+(-(h/360*420))+'px)';
 }
 
 function renderLabels(){
   document.querySelectorAll('.lbl').forEach(function(e){ e.remove(); });
   var W=window.innerWidth, H=window.innerHeight;
 
-  // Filtra le cime visibili nel campo visivo
   var vis = S.mountains.filter(function(m){
-    return Math.abs(angDiff(m.az, S.heading)) < FOV/2 + 8;
-  }).slice(0, 20);
+    return Math.abs(angDiff(m.az,S.heading)) < FOV/2+8;
+  }).slice(0,20);
 
-  // Ordina per distanza DECRESCENTE — le più lontane si disegnano prima (sotto)
-  vis.sort(function(a,b){ return b.dist - a.dist; });
+  // Ordina per distanza decrescente: le più lontane si disegnano prima (sotto)
+  vis.sort(function(a,b){ return b.dist-a.dist; });
 
   vis.forEach(function(m){
     var diff = angDiff(m.az, S.heading);
-    var x = W * (0.5 + diff / FOV);
-    var y = H * (0.28 + Math.min(m.dist / 150, 1) * 0.38);
+    var x = W*(0.5 + diff/FOV);
+    var y = H*(0.28 + Math.min(m.dist/150,1)*0.38);
 
-    // Opacità e colore in base alla distanza:
-    // vicine (0km) → 100% vivido, lontane (150km) → 40% sbiadito
-    var proximity = 1 - Math.min(m.dist / 150, 1); // 1=vicina, 0=lontana
-    var alpha     = 0.40 + proximity * 0.60;        // 0.40 → 1.00
-    var borderAlpha = 0.25 + proximity * 0.55;      // bordo cyan più o meno vivido
-    // Scala: le cime vicine sono leggermente più grandi
-    var scale = 0.80 + proximity * 0.28;            // 0.80 → 1.08
+    // Vicinanza: 1=vicina, 0=lontana
+    var prox  = 1 - Math.min(m.dist/150, 1);
+    var alpha = 0.35 + prox*0.65;
+    var scale = 0.78 + prox*0.30;
+    var zIdx  = Math.round(prox*100);
+    var borderA = 0.2 + prox*0.6;
+    var glowR   = Math.round(3 + prox*7);
 
-    var ds = m.dist < 1 ? Math.round(m.dist * 1000) + 'm' : Math.round(m.dist) + 'km';
+    var ds = m.dist<1 ? Math.round(m.dist*1000)+'m' : Math.round(m.dist)+'km';
 
     var el = document.createElement('div');
-    el.className = 'lbl';
-    el.style.left    = x + 'px';
-    el.style.top     = y + 'px';
-    el.style.opacity = alpha;
-    el.style.transform = 'translate(-50%, -100%) scale(' + scale + ')';
-    el.style.transformOrigin = 'bottom center';
-    el.style.zIndex  = Math.round(proximity * 100); // z-index basato sulla vicinanza
+    el.className='lbl';
+    el.style.cssText = 'left:'+x+'px;top:'+y+'px;opacity:'+alpha+
+      ';transform:translate(-50%,-100%) scale('+scale+
+      ');transform-origin:bottom center;z-index:'+zIdx;
 
     el.innerHTML =
-      '<div class="lbl-box" style="border-color:rgba(56,189,248,' + borderAlpha + ')">' +
-        '<div class="lbl-name">' + m.n + '</div>' +
-        '<div class="lbl-alt">' + m.a.toLocaleString() + ' m</div>' +
-        '<div class="lbl-dist">' + ds + '</div>' +
-      '</div>' +
-      '<div class="lbl-dot" style="opacity:' + alpha + ';box-shadow:0 0 ' + Math.round(4+proximity*6) + 'px #38bdf8"></div>';
+      '<div class="lbl-box" style="border-color:rgba(56,189,248,'+borderA+')">' +
+        '<div class="lbl-name">'+m.n+'</div>'+
+        '<div class="lbl-alt">'+m.a.toLocaleString()+' m</div>'+
+        '<div class="lbl-dist">'+ds+'</div>'+
+      '</div>'+
+      '<div class="lbl-dot" style="box-shadow:0 0 '+glowR+'px #38bdf8"></div>';
 
     el.addEventListener('click', function(e){
       e.stopPropagation();
       showPopup(m, x, y);
     });
-
     document.getElementById('overlay').appendChild(el);
   });
 }
 
+// ── POPUP ─────────────────────────────────────────────────────────────────
+function showPopup(m, x, y){
+  var ds = m.dist<1 ? Math.round(m.dist*1000)+' m' : m.dist.toFixed(1)+' km';
+  document.getElementById('popName').textContent    = m.n;
+  document.getElementById('popAlt').textContent     = m.a.toLocaleString()+' m';
+  document.getElementById('popDist').textContent    = ds;
+  document.getElementById('popCountry').textContent = m.c || '—';
+
+  var pop = document.getElementById('popup');
+  var W   = window.innerWidth;
+  var px  = Math.min(Math.max(x, 125), W-125);
+  pop.style.left    = px+'px';
+  pop.style.top     = (y-14)+'px';
+  pop.style.display = 'block';
+}
+function closePopup(){ document.getElementById('popup').style.display='none'; }
+document.addEventListener('click', function(e){
+  var pop=document.getElementById('popup');
+  if(pop && pop.style.display!=='none' && !pop.contains(e.target)) closePopup();
+});
+
+// ── RADAR ─────────────────────────────────────────────────────────────────
 function renderRadar(){
   var cv=document.getElementById('radar'),ctx=cv.getContext('2d');
   var cx=38,cy=38,r=34,D2R=Math.PI/180;
@@ -855,12 +404,12 @@ function renderRadar(){
     ctx.beginPath();ctx.arc(cx,cy,r*s,0,Math.PI*2);
     ctx.strokeStyle='rgba(56,189,248,.15)';ctx.lineWidth=1;ctx.stroke();
   });
-  var hr=(S.heading-90)*D2R, fv=(FOV/2)*D2R;
+  var hr=(S.heading-90)*D2R,fv=(FOV/2)*D2R;
   ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,hr-fv,hr+fv);ctx.closePath();
   ctx.fillStyle='rgba(56,189,248,.12)';ctx.fill();
   S.mountains.forEach(function(m){
-    var az=(m.az-90)*D2R, d=Math.min(m.dist/200,1)*r*.88;
-    var mx=cx+Math.cos(az)*d, my=cy+Math.sin(az)*d;
+    var az=(m.az-90)*D2R,d=Math.min(m.dist/150,1)*r*.88;
+    var mx=cx+Math.cos(az)*d,my=cy+Math.sin(az)*d;
     var inV=Math.abs(angDiff(m.az,S.heading))<FOV/2;
     ctx.beginPath();ctx.arc(mx,my,inV?2.5:1.5,0,Math.PI*2);
     ctx.fillStyle=inV?'#38bdf8':'rgba(255,255,255,.3)';ctx.fill();
@@ -869,58 +418,15 @@ function renderRadar(){
   ctx.fillText('N',cx,cy-r+9);
 }
 
-// ── PANEL ─────────────────────────────────────────────────────────────────
-function showPopup(m, x, y){
-  var pop = document.getElementById('popup');
-  var ds  = m.dist < 1 ? Math.round(m.dist*1000)+' m' : m.dist.toFixed(1)+' km';
-  var country = m.c || '—';
-
-  pop.innerHTML =
-    '<div class="pop-close" onclick="closePopup()">✕</div>' +
-    '<div class="pop-name">' + m.n + '</div>' +
-    '<div class="pop-row"><span>Altitudine</span><span class="pop-val">' + m.a.toLocaleString() + ' m</span></div>' +
-    '<div class="pop-row"><span>Distanza</span><span class="pop-val">' + ds + '</span></div>' +
-    '<div class="pop-row"><span>Paese</span><span class="pop-val">' + country + '</span></div>';
-
-  // Posiziona il popup sopra l'etichetta, restando dentro lo schermo
-  var W = window.innerWidth;
-  var px = Math.min(Math.max(x, 120), W - 120);
-  pop.style.left    = px + 'px';
-  pop.style.top     = (y - 10) + 'px';
-  pop.style.display = 'block';
-}
-
-function closePopup(){
-  document.getElementById('popup').style.display = 'none';
-}
-
-// Chiudi popup toccando fuori
-document.addEventListener('click', function(e){
-  var pop = document.getElementById('popup');
-  if(pop && pop.style.display !== 'none' && !pop.contains(e.target)){
-    closePopup();
-  }
-});
-  document.getElementById('pName').textContent = m.n;
-  document.getElementById('pChain').textContent = m.ch||'—';
-  document.getElementById('pAlt').textContent = m.a.toLocaleString()+' m';
-  var ds = m.dist<1 ? Math.round(m.dist*1000)+' m' : m.dist.toFixed(1)+' km';
-  document.getElementById('pDist').textContent = ds;
-  document.getElementById('pCountry').textContent = m.c||'—';
-  document.getElementById('pAz').textContent = Math.round(m.az)+'°';
-  document.getElementById('panel').classList.add('open');
-}
-function closePanel(){ document.getElementById('panel').classList.remove('open'); }
-
 // ── MANUAL ────────────────────────────────────────────────────────────────
 function showManual(){
-  document.getElementById('manualBtns').style.display = 'flex';
-  setStatus(i18n.compassNo);
+  document.getElementById('manualBtns').style.display='flex';
+  setStatus('🧭 Bussola non disponibile – usa ◀ ▶');
 }
-function startTurn(d){ S.turnTimer = setInterval(function(){ S.heading=(S.heading+d*1.5+360)%360; },30); }
+function startTurn(d){ S.turnTimer=setInterval(function(){ S.heading=(S.heading+d*1.5+360)%360; },30); }
 function stopTurn(){ clearInterval(S.turnTimer); }
 function toggleHelp(){ var h=document.getElementById('helpBox'); h.style.display=h.style.display==='none'?'block':'none'; }
-function setStatus(t){ document.getElementById('statusTxt').textContent = t; }
+function setStatus(t){ document.getElementById('statusTxt').textContent=t; }
 </script>
 </body>
 </html>
