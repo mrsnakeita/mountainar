@@ -425,22 +425,23 @@ function renderLabels(){
     var x=W*(0.5+diff/FOV);
     var y=H*(0.28+Math.min(m.dist/RADIUS,1)*0.38);
     var prox=1-Math.min(m.dist/RADIUS,1);
-    var alpha=0.35+prox*0.65;
-    var scale=0.78+prox*0.30;
+    var alpha=0.15+prox*0.85;        // lontane quasi invisibili, vicine opache
+    var scale=0.72+prox*0.36;        // lontane piccole, vicine grandi
     var zIdx=Math.round(prox*100);
-    var borderA=0.2+prox*0.6;
-    var glowR=Math.round(3+prox*7);
+    var borderA=0.08+prox*0.75;      // bordo quasi assente in lontananza
+    var bgA=0.15+prox*0.75;          // sfondo scuro solo sulle vicine
+    var glowR=Math.round(2+prox*9);
     var ds=m.dist<1?Math.round(m.dist*1000)+'m':Math.round(m.dist)+'km';
     var el=document.createElement('div');
     el.className='lbl';
     el.style.cssText='left:'+x+'px;top:'+y+'px;opacity:'+alpha+';transform:translate(-50%,-100%) scale('+scale+');z-index:'+zIdx;
     el.innerHTML=
-      '<div class="lbl-box" style="border-color:rgba(56,189,248,'+borderA+')">'+
+      '<div class="lbl-box" style="border-color:rgba(56,189,248,'+borderA+');background:rgba(0,20,45,'+bgA+')">'+
         '<div class="lbl-name">'+m.n+'</div>'+
         '<div class="lbl-alt">'+m.a.toLocaleString()+' m</div>'+
         '<div class="lbl-dist">'+ds+'</div>'+
       '</div>'+
-      '<div class="lbl-dot" style="box-shadow:0 0 '+glowR+'px #38bdf8"></div>';
+      '<div class="lbl-dot" style="box-shadow:0 0 '+glowR+'px #38bdf8;opacity:'+alpha+'"></div>';
     el.addEventListener('click',function(e){ e.stopPropagation(); showPopup(m,x,y); });
     document.getElementById('overlay').appendChild(el);
   });
